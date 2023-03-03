@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<materials>
+	<category name="Фундаменты">
+		<houseComp> <!--Материал-->
+			<name>Ростверк 150*200 + винт.сваи 2500мм</name> <!--Название для ТЗ-->
+
+			<est_items>
+				<piles>
+					<name>Сваи д108*2500мм</name>
+					<quantity>{(width+length)/piledist_C}+2</quantity>
+					<price>4100=</price>
+					<description>
+						Винтовые металлические сваи D 108мм/2500мм/4мм/лопасть 300мм, обработанные грунтом-эмалью "3 в 1". Бурение свай ручной гидроустановкой. Обрезка в уровень, засыпка ЦПС стволов. Оголовок 180мм х 180мм, сварка оголовков. Дополнительные материалы: электроды, диск отрезной по металлу.
+					</description> 
+				</piles>
+				<trialdrilling>
+					<name>Пробное-геодезия</name>
+					<quantity>1=</quantity>
+					<price>(distance*2)*trialkm_P+trialdr_P=</price> 
+					<description>
+					</description>
+				</trialdrilling>
+				<pileshipping>
+					<name>Доставка свай</name>
+					<quantity>1=</quantity>
+					<price>(distance*2)*pileship_P=</price> 
+					<description>
+					</description>
+				</pileshipping>
+				<techshipping>
+					<name>Доставка техники</name>
+					<quantity>1=</quantity>
+					<price>(distance*2)*techship_P</price> 
+					<description>
+					</description> 
+				</techshipping>
+			</est_items>
+		</houseComp>
+		<houseComp>
+			<name>Сваи без гарантии</name>
+
+			<est_items>
+				<piles>
+					<name>Сваи д108*2500мм</name>
+					<quantity></quantity>
+					<description>
+					</description>
+				</piles>
+				<pileshipping>
+					<name>Доставка свай</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</pileshipping>
+				<techshipping>
+					<name>Доставка техники</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</techshipping>
+			</est_items>
+
+			<variables> <!--Переменные-->
+				<width></width> 
+				<height></height>
+				<markup></markup>
+				<distance></distance>
+			</variables>
+
+			<prices> <!--Цены-->
+				<pile_P>4100</pile_P> 
+
+				<trialkm_P>50</trialkm_P>
+				<trialdrl_P>4000</trialdrl_P>
+
+				<pileshp_P>20</pileshp_P>
+				<machineryshp_P>40</machineryshp_P>
+			</prices>
+
+			<consts> <!--Константы-->
+				<pileDist_C>1.7</pileDist_C> 
+			</consts>
+		</houseComp>
+		<houseComp>
+			<name>Фундамент бетон 400*800 + бур.сваи</name>
+		</houseComp>
+	</category>
+
+	<category name="Перекрытия">
+		<houseComp>
+			<name>СИП 2800*174</name>
+			<est_items>
+				<sip>
+					<name>СИП 2800мм*174</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</sip>
+				<veener>
+					<name>Шпон-зашивка</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</veener>
+			</est_items>
+		</houseComp>
+		<houseComp>
+			<name>Каркас голый 50*150/30*150 - сверху сплошь</name>
+			<est_items>
+				<carcass>
+					<name>Каркас 50*150</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</carcass>
+				<upside>
+					<name>Сверху 30*150</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</upside>
+			</est_items>
+		</houseComp>
+		<houseComp>
+			<name>Каркас полный 50*150/22*150/30*150 - снизу через раз, сверху сплошь</name>
+			<est_items>
+				<carcass>
+					<name>Каркас 50*150</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</carcass>
+				<upside>
+					<name>Сверху 30*150</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</upside>
+				<downside>
+					<name>Снизу 22*150 через раз</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</downside>
+				<isolation>
+					<name>Тепло-звукоизоляция URSA TERRA</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</isolation>
+				<filming>
+					<name>Пленка</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</filming>
+			</est_items>
+		</houseComp>
+	</category>
+
+	<category name="Отделка">
+		<houseComp>
+			<name>Нет</name>
+		</houseComp>
+		<houseComp>
+			<name>Haurberk</name>
+		</houseComp>
+		<houseComp>
+			<name>Металлосайдинг RAL</name>
+		</houseComp>
+		<houseComp>
+			<name>Металлосайдинг Printech</name>
+		</houseComp>
+		<houseComp>
+			<name>Виниловый сайдинг</name>
+		</houseComp>
+		<houseComp>
+			<name>Штукатурка</name>
+		</houseComp>
+		<houseComp>
+			<name>Облицовочный кирпич</name>
+		</houseComp>
+	</category>
+
+	<walls name="Стены (неактуально)">
+		<sip height = "2800" width = "174" tags = "110"/>
+		<sip height = "2500" width = "174" tags = "110"/>
+		<sip height = "2800" width = "124" tags = "000"/>
+		<sip height = "2500" width = "124" tags = "000"/>
+
+		<carcass height = "2800" width = "100" tags = "001" full = "голый"/>
+		<carcass height = "2500" width = "100" tags = "001" full = "голый"/>
+		<carcass height = "2800" width = "100" tags = "001" full = "полный"/>
+		<carcass height = "2500" width = "100" tags = "001" full = "полный"/>
+
+		<carcass height = "2800" width = "150" tags = "010" full = "голый"/>
+		<carcass height = "2500" width = "150" tags = "010" full = "голый"/>
+		<carcass height = "2800" width = "150" tags = "010" full = "полный"/>
+		<carcass height = "2500" width = "150" tags = "010" full = "полный"/>
+	</walls>
+
+	<outside name="Внешние стены">
+		<sip height = "2800" width = "174" tags = "110"/>
+		<sip height = "2500" width = "174" tags = "110"/>
+	</outside>
+
+	<supporting name="Несущие стены">
+		<sip height = "2800" width = "174" tags = "110"/>
+		<sip height = "2500" width = "174" tags = "110"/>
+
+		<carcass height = "2800" width = "150" tags = "010" full = "голый"/>
+		<carcass height = "2500" width = "150" tags = "010" full = "голый"/>
+		<carcass height = "2800" width = "150" tags = "010" full = "полный"/>
+		<carcass height = "2500" width = "150" tags = "010" full = "полный"/>
+	</supporting>
+
+	<common name="Не несущие стены">
+		<sip height = "2800" width = "124" tags = "000"/>
+		<sip height = "2500" width = "124" tags = "000"/>
+
+		<carcass height = "2800" width = "100" tags = "001" full = "голый"/>
+		<carcass height = "2500" width = "100" tags = "001" full = "голый"/>
+		<carcass height = "2800" width = "100" tags = "001" full = "полный"/>
+		<carcass height = "2500" width = "100" tags = "001" full = "полный"/>
+	</common>
+
+	<drywalls name="Гипсокартон">
+		<houseComp>
+			<name>Нет</name>
+		</houseComp>
+		<drywall width = "9" layers = "1"/>
+		<drywall width = "9" layers = "2"/>
+		<drywall width = "12" layers = "1"/>
+		<drywall width = "12" layers = "2"/>
+	</drywalls>
+
+	<category name="Типы кровли">
+		<houseComp>
+			<name>Полные 2 этажа</name>
+		</houseComp>
+		<houseComp>
+			<name>Полуторка</name>
+		</houseComp>
+		<houseComp>
+			<name>От конька</name>
+		</houseComp>
+		<houseComp>
+			<name>4 ската</name>
+		</houseComp>
+	</category>
+
+	<category name="Покрытия крыши">
+		<houseComp>
+			<name>Стальной бархат</name>
+		</houseComp>
+		<houseComp>
+			<name>Черепица Исп. Сиера RAL 0,5</name>
+		</houseComp>
+		<houseComp>
+			<name>Профнастил С21 - RAL 0,5</name>
+		</houseComp>
+		<houseComp>
+			<name>Профнастил С8 - RAL 0,5</name>
+		</houseComp>
+		<houseComp>
+			<name>>Мягкая черепица</name>
+		</houseComp>
+	</category>
+
+	<category name="Карнизы">
+		<houseComp>
+			<name>Винил софит перфорированный</name>
+		</houseComp>
+		<houseComp>
+			<name>Металл софит перфорированный</name>
+		</houseComp>
+		<houseComp>
+			<name>Каракас без отделки</name>
+		</houseComp>
+	</category>
+
+	<category name="Водостоки">
+		<houseComp>
+			<name>Нет</name>
+		</houseComp>
+		<houseComp>
+			<name>Только крюки</name>
+		</houseComp>
+		<houseComp>
+			<name>Под ключ</name>
+		</houseComp>
+	</category>
+
+	<category name="Окна">
+		<houseComp><name>1250х1550 (2)              </name><est_items><wind><name>1250х1550 (2)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>   
+		<houseComp><name>1250х1400 (2)              </name><est_items><wind><name>1250х1400 (2)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>    
+		<houseComp><name>1000х1550 (1)              </name><est_items><wind><name>1000х1550 (1)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>   
+		<houseComp><name>1000х1400 (1)              </name><est_items><wind><name>1000х1400 (1)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>  
+		<houseComp><name>625х1550 (1)               </name><est_items><wind><name>625х1550 (1)             </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>    
+		<houseComp><name>625х1400 (1)               </name><est_items><wind><name>625х1400 (1)             </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp> 
+		<houseComp><name>625х625 (1)                </name><est_items><wind><name>625х625 (1)              </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>   
+		<houseComp><name>1875х1550 (3)              </name><est_items><wind><name>1875х1550 (3)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>    
+		<houseComp><name>1875х1400 (3)              </name><est_items><wind><name>1875х1400 (3)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>    
+		<houseComp><name>1875х1550 (2)              </name><est_items><wind><name>1875х1550 (2)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>      
+		<houseComp><name>1875х1400 (2)              </name><est_items><wind><name>1875х1400 (2)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>    
+		<houseComp><name>900х2100 (1 двер проф)     </name><est_items><wind><name>900х2100 (1 двер проф)   </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>             
+		<houseComp><name>900х2100 (1 окон проф)     </name><est_items><wind><name>900х2100 (1 окон проф)   </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>       
+		<houseComp><name>2000х2100 (2 двер проф)    </name><est_items><wind><name>2000х2100 (2 двер проф)  </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>        
+		<houseComp><name>2000х2100 (3 двер проф)    </name><est_items><wind><name>2000х2100 (3 двер проф)  </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>       
+		<houseComp><name>700х1850 (1 глух)          </name><est_items><wind><name>700х1850 (1 глух)        </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>       
+		<houseComp><name>2000х1550 (2)              </name><est_items><wind><name>2000х1550 (2)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>     
+		<houseComp><name>2000х1400 (2)              </name><est_items><wind><name>2000х1400 (2)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>      
+		<houseComp><name>2000х1550 (3)              </name><est_items><wind><name>2000х1550 (3)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>
+		<houseComp><name>2000х1400 (3)              </name><est_items><wind><name>2000х1400 (3)            </name>
+		<quantity></quantity>
+		<price></price>
+		</wind></est_items></houseComp>
+	</category>
+
+	<category name="Двери">
+		<houseComp>
+			<name>2100x1000x60 Техническая</name>
+			<est_items><doors><name>2100x1000x60 Техническая</name></doors></est_items>
+		</houseComp>
+		<houseComp>
+			<name>2100x1000x60</name>
+			<est_items><doors><name>2100x1000x60</name></doors></est_items>
+		</houseComp>
+		<houseComp>
+			<name>2100x1000x100</name>
+			<est_items><doors><name>2100x1000x100</name></doors></est_items>
+		</houseComp>
+		<houseComp>
+			<name>С терморазрывом</name>
+			<est_items><doors><name>С терморазрывом</name></doors></est_items>
+		</houseComp>
+	</category>
+
+	<category name="Типы канализаций">
+		<houseComp>
+			<name>Нет</name>
+		</houseComp>
+		<houseComp>
+			<name>3 кольца под ключ до 100 км Казань</name>
+		</houseComp>
+		<houseComp>
+			<name>3 кольца под ключ 100-300 км Казань</name>
+		</houseComp>
+		<houseComp>
+			<name>3 кольца под ключ свыше 300 км Казань</name>
+		</houseComp>
+	</category>
+	
+	<category name="Типы электрики">
+		<houseComp>
+			<name>Нет</name>
+		</houseComp>
+		<houseComp>
+			<name>До 100 м2 - 20 точек</name>
+		</houseComp>
+		<houseComp>
+			<name>От 100 - безлимит м2 - 30 точек</name>
+		</houseComp>
+	</category>
+
+	<category name="Типы отопления">
+		<houseComp>
+			<name>Нет</name>
+		</houseComp>
+		<houseComp>
+			<name>Газовое + санта до 120 м2</name>
+		</houseComp>
+		<houseComp>
+			<name>Газовое + санта 120-200 м2</name>
+		</houseComp>
+		<houseComp>
+			<name>Электрическое+ санта до 120 м2</name>
+		</houseComp>
+		<houseComp>
+			<name>Электрическое +  санта 120-200 м2</name>
+		</houseComp>
+		<houseComp>
+			<name>Конвекторы без санты до 120</name>
+		</houseComp>
+		<houseComp>
+			<name>Конвекторы без санты свыше 120</name>
+		</houseComp>
+	</category>
+
+	<category name="Типы ростверка">
+		<houseComp>
+			<name>Ростверк</name>
+			<est_items>
+				<twerk>
+					<name>Ростверк 150*200</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price></price> 
+				</twerk>
+				<stapples>
+					<name>Скобы</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</stapples>
+				<primer>
+					<name>Праймер</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</primer>
+				<ruberoid>
+					<name>Рубероид</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</ruberoid>
+				<deaf>
+					<name>Глухарь 140</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</deaf>
+				<assembling>
+					<name>Монтаж</name>
+					<quantity></quantity>
+					<description>
+					</description>
+					<price>4100</price> 
+				</assembling>
+			</est_items>
+
+			<variables> <!--Переменные-->
+				<width></width> 
+				<height></height>
+				<markup></markup>
+				<distance></distance>
+			</variables>
+
+			<prices> <!--Цены-->
+
+				<trialkm_P>50</trialkm_P>
+				<trialdrl_P>4000</trialdrl_P>
+
+				<pileshp_P>20</pileshp_P>
+				<machineryshp_P>40</machineryshp_P>
+			</prices>
+
+			<consts> <!--Константы-->
+				<pileDist_C>1.7</pileDist_C> 
+			</consts>
+		</houseComp>
+	</category>
+
+	<category name="Метизы">
+		<houseComp>
+			<name>Метиз</name>
+		</houseComp>
+	</category>
+
+	<category name="Производственно-монтажные услуги">
+		<houseComp>
+			<name>Производство, монтаж</name>
+		</houseComp>
+	</category>
+
+	<category name="Услуги доставки">
+		<houseComp>
+			<name>Доставка</name>
+		</houseComp>
+	</category>
+
+	<category name="Дополнительные конструкции">
+		<houseComp>
+			<name>Крыльцо/Терасса/Балкон летний</name>
+		</houseComp>
+	</category>
+</materials>

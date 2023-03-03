@@ -1,0 +1,2713 @@
+﻿<Window x:Class="EcohouseManager.WindowTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:EcohouseManager"
+        mc:Ignorable="d"
+        Title="WindowTest" Height="824" Width="1024">
+
+    <Window.Resources>
+
+        <XmlDataProvider x:Key="MaterialsProvider" Source="Materials.xml" XPath="/materials" IsAsynchronous="False"/>
+        <XmlDataProvider x:Key="ProjectProvider" Source="ProjectPattern.xml" XPath="/root" IsAsynchronous="False"/>
+
+        <local:StringToDoubleConverter x:Key="convStrToDbl" />
+        <local:StringToDecimalConverter x:Key="convStrToDec" />
+        <local:StringToRoofTypeConverter x:Key="convStrToRfTp"/>
+        <local:XmlToRoofTypeMultiConverter x:Key="convXmlToRfTp"/>
+        <local:XmlToTextBoxToHouseParamConverter x:Key="convXmlToTxtbToHP"/>
+        <local:XmlToTextBoxToMetadataConverter x:Key="convXmlToTxtbToMD"/>
+        <local:WindowMaterialCheckBoxHasFilmEnabledConverter x:Key="convWMHFEnabled"/>
+
+        <Style TargetType="StackPanel">
+            <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+            <Setter Property="Background" Value="#FFFFFF"/>
+        </Style>
+
+        <Style TargetType="ListBox" x:Key="lstbStyle">
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="Width" Value="700" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                       Path=Items.Count}" Value="0">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Focusable" Value="False" />
+        </Style>
+
+        <Style TargetType="Grid">
+            <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+        </Style>
+
+        <Style TargetType="Label">
+            <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="20"></Setter>
+            <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+        </Style>
+
+    </Window.Resources>
+
+    <StackPanel Orientation="Vertical">
+
+        <Menu>
+            <MenuItem Header="Проект">
+                <MenuItem Header="Создать новый" 
+                      Click="CreateNewProject"/>
+                <MenuItem Header="Открыть проект" 
+                      Click="LoadProject"/>
+                <Separator/>
+                <MenuItem Header="Сохранить"
+                          Click="SaveChanges"
+                          IsEnabled="{Binding Path=HasAnyChange, Mode=OneWay}"/>
+                <MenuItem Header="Сохранить как..."
+                          Click="SaveProjectAs"/>
+            </MenuItem>
+            <MenuItem Header="Открыть предварительную смету" 
+                      Click="btnOpenEstimatePage_Click"/>
+            <Separator/>
+            <MenuItem Header="Открыть менеджер материалов" 
+                      Click="ProjectManager_ShowDialog"/>
+        </Menu>
+
+        <TabControl>
+            
+            <!-- Страница ТЗ -->
+
+            <TabItem Header="Заполнение ТЗ">
+
+                <ScrollViewer x:Name="scvTechTask" Height="760"
+                              VerticalScrollBarVisibility="Visible">
+
+                    <StackPanel x:Name="spTechTask">
+
+                        <StackPanel.Resources>
+
+                            <local:XmlToComboBoxToFromMaterialMultiConverter 
+                            x:Key="XmlToCBToMaterialConverter"/>
+                            <local:ComboBoxSelectedItemToMakeChangesInCatrgoryMultiConverter 
+                            x:Key="SelectedItemToMakeChangesConverter" x:Shared="false" />
+                            <local:EnableCheckingWindowFilmConverter 
+                            x:Key="EnableCheckingFilmConverter"/>
+
+                            <DataTemplate x:Key="cbiSelectMaterial" x:Shared="false">
+                                <Label Content="{Binding XPath=name}" />
+                            </DataTemplate>
+
+                            <Style TargetType="ComboBox">
+                                <Setter Property="Width" Value="300"/>
+                                <Setter Property="DisplayMemberPath" Value="name"/>
+                                <Setter Property="IsEditable" Value="True"/>
+                                <Setter Property="IsReadOnly" Value="True"/>
+                                <Setter Property="IsTextSearchEnabled" Value="False"/>
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
+                                <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+                            </Style>
+
+                            <StackPanel x:Key="spPlasterboardItemsAddition"
+                                        Orientation="Horizontal" Grid.Column="2">
+                                <Label>Количество:</Label>
+
+                                <xctk:IntegerUpDown Width="100"
+                                                    HorizontalAlignment="Left"
+                                                    Increment="1"
+                                                    Value="{Binding Path=SelectedMaterial.Quantity,
+                                                                    Mode=TwoWay}"
+                                                    Minimum="0">
+
+                                </xctk:IntegerUpDown>
+                            </StackPanel>
+
+                            <sys:String x:Key="NotSelectedHe">{не выбран}</sys:String>
+                            <sys:String x:Key="NotSelectedShe">{не выбрана}</sys:String>
+                            <sys:String x:Key="NotSelectedIt">{не выбрано}</sys:String>
+                            <sys:String x:Key="NotSelectedThey">{не выбраны}</sys:String>
+
+                        </StackPanel.Resources>
+                        
+                        <!-- Мета -->
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Label Content="Имя клиента" 
+                                  Grid.Row="0" Grid.Column="0"/>
+
+                            <TextBox Grid.Row="0" Grid.Column="1"
+                                     Width="300" HorizontalAlignment="Left">
+                                <TextBox.Text>
+                                    <Binding UpdateSourceTrigger="PropertyChanged"
+                                             Path="Customer" 
+                                             Mode="TwoWay">
+                                    </Binding>
+                                </TextBox.Text>
+
+                                <TextBox.Tag>
+                                    <Binding Converter="{StaticResource convXmlToTxtbToMD}"
+                                             ConverterParameter="customer"
+                                             Source="{StaticResource ProjectProvider}"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             XPath="meta/customer"
+                                             Mode="OneWay">
+                                    </Binding>
+                                </TextBox.Tag>
+                            </TextBox>
+                            
+                            <Label Content="Телефон" 
+                                   Grid.Row="1" Grid.Column="0"/>
+
+                            <TextBox Grid.Row="1" Grid.Column="1"
+                                     Width="300" HorizontalAlignment="Left">
+                                <TextBox.Text>
+                                    <Binding UpdateSourceTrigger="PropertyChanged"
+                                             Path="Phone" 
+                                             Mode="TwoWay">
+                                    </Binding>
+                                </TextBox.Text>
+
+                                <TextBox.Tag>
+                                    <Binding Converter="{StaticResource convXmlToTxtbToMD}"
+                                             ConverterParameter="phone"
+                                             Source="{StaticResource ProjectProvider}"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             XPath="meta/phone"
+                                             Mode="OneWay">
+                                    </Binding>
+                                </TextBox.Tag>
+                            </TextBox>
+
+                            <Label Content="Населённый пункт" 
+                                   Grid.Row="2" Grid.Column="0"/>
+
+                            <TextBox Grid.Row="2" Grid.Column="1"
+                                     Width="300" HorizontalAlignment="Left">
+                                <TextBox.Text>
+                                    <Binding UpdateSourceTrigger="PropertyChanged"
+                                             Path="Location" 
+                                             Mode="TwoWay">
+                                    </Binding>
+                                </TextBox.Text>
+
+                                <TextBox.Tag>
+                                    <Binding Converter="{StaticResource convXmlToTxtbToMD}"
+                                             ConverterParameter="location"
+                                             Source="{StaticResource ProjectProvider}"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             XPath="meta/location"
+                                             Mode="OneWay">
+                                    </Binding>
+                                </TextBox.Tag>
+                            </TextBox>
+                            
+                            <Label Content="Расстояние, км" 
+                                   Grid.Row="3" Grid.Column="0"/>
+
+                            <TextBox Grid.Row="3" Grid.Column="1"
+                                     Width="300" HorizontalAlignment="Left">
+                                <TextBox.Text>
+                                    <Binding Converter="{StaticResource convStrToDec}"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             Path="Distance" 
+                                             Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <local:NaturalNumberValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+
+                                <TextBox.Tag>
+                                    <Binding Converter="{StaticResource convXmlToTxtbToMD}"
+                                             ConverterParameter="distance"
+                                             Source="{StaticResource ProjectProvider}"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             XPath="meta/distance"
+                                             Mode="OneWay">
+                                        <Binding.ValidationRules>
+                                            <local:NaturalNumberValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Tag>
+                            </TextBox>
+
+                            <Label Content="Площадь, м кв." 
+                                   Grid.Row="4" Grid.Column="0"/>
+
+                            <TextBox Grid.Row="4" Grid.Column="1"
+                                     Width="300" HorizontalAlignment="Left">
+                                <TextBox.Text>
+                                    <Binding Converter="{StaticResource convStrToDec}"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             Path="Area" 
+                                             Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <local:NaturalNumberValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+
+                                <TextBox.Tag>
+                                    <Binding Converter="{StaticResource convXmlToTxtbToMD}"
+                                             ConverterParameter="area"
+                                             Source="{StaticResource ProjectProvider}"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             XPath="meta/area"
+                                             Mode="OneWay">
+                                        <Binding.ValidationRules>
+                                            <local:NaturalNumberValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Tag>
+                            </TextBox>
+
+                        </Grid>
+
+                        <!-- Основное -->
+
+                        <StackPanel Orientation="Vertical">
+
+                            <Label Background="#FFE5E5E5">Основное</Label>
+
+                            <!-- Фундамент -->
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Фундамент" Grid.Column="0"/>
+                                <ComboBox x:Name="cbBaseCategory" Grid.Column="1"
+                                      DataContext="{Binding Path=Categories[base]}"
+                                      ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                            XPath=base/material, 
+                                                            Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedHe},
+                                                     Mode=OneWay}"
+                                      SelectedValuePath="name">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                 XPath="house/base/material"
+                                                 Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+                            </Grid>
+
+                        </StackPanel>
+
+                        <!-- Цокольный этаж -->
+
+                        <StackPanel Orientation="Vertical">
+
+                            <Label Background="#FFE5E5E5">Цокольный этаж</Label>
+
+                            <Grid DataContext="{Binding Path=Categories[basement]}">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Цокольное перекрытие -->
+
+                                <Label Content="Цокольное перекрытие" 
+                                       Grid.Row="0" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cbBasementCeilingCategory" 
+                                          Grid.Row="0" Grid.Column="1"
+                                          DataContext="{Binding Path=SubCategories[ceiling]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=ceiling/material, 
+                                                                Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedIt},
+                                                     Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/basement/ceiling/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                                <!-- Цокольная отделка -->
+
+                                <Label Content="Цокольная отделка"  
+                                       Grid.Row="1" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cbBasementSidingCategory" 
+                                          Grid.Row="1" Grid.Column="1"
+                                          DataContext="{Binding Path=SubCategories[siding]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=siding/material, 
+                                                                Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedShe},
+                                                     Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                 XPath="house/basement/siding/material"
+                                                 Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                            </Grid>
+
+                        </StackPanel>
+
+                        <!-- Первый этаж -->
+
+                        <StackPanel Orientation="Vertical" 
+                                    DataContext="{Binding Path=Categories[floors].SubCategories[floor1]}">
+
+                            <Label Background="#FFE5E5E5">Первый этаж</Label>
+
+                            <!-- Стены -->
+                            
+                            <Grid DataContext="{Binding Path=SubCategories[walls]}">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Внешние стены -->
+
+                                <Label Content="Внешние стены" 
+                                           Grid.Row="0" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cb1stFloorExternalWallsCategory" 
+                                          Grid.Row="0" Grid.Column="1"
+                                          DataContext="{Binding Path=SubCategories[external_walls]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=external_walls/material, 
+                                                                Mode=OneWay}"
+                                              Text="{Binding Path=SelectedMaterial.Name,
+                                                             TargetNullValue={StaticResource NotSelectedThey},
+                                                             Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/floors/floor1/walls/external_walls/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                                <!-- Несущие стены -->
+
+                                <Label Content="Несущие стены" 
+                                       Grid.Row="1" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cb1stFloorBearingWallsCategory"
+                                          Grid.Row="1" Grid.Column="1" 
+                                          DataContext="{Binding Path=SubCategories[bearing_walls]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=bearing_walls/material, 
+                                                                Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedThey},
+                                                     Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/floors/floor1/walls/bearing_walls/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                                <!-- Ненесущие стены -->
+
+                                <Label Content="Ненесущие стены"
+                                       Grid.Row="2" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cb1stFloorCurtainWallsCategory" 
+                                          Grid.Row="2" Grid.Column="1" 
+                                          DataContext="{Binding Path=SubCategories[curtain_walls]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=curtain_walls/material, 
+                                                                Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedThey},
+                                                     Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/floors/floor1/walls/curtain_walls/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                            </Grid>
+
+                            <!-- Гипсокартон -->
+
+                            <StackPanel Orientation="Vertical" DataContext="{Binding Path=SubCategories[plasterboard]}">
+
+                                <!-- Гипсокартон стены -->
+
+                                <Grid DataContext="{Binding Path=SubCategories[plasterboard_walls]}">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="Гипсокартон стены" Grid.Column="0"/>
+                                    
+                                    <ComboBox x:Name="cb1stFloorPlasterboardWallsCategory" Grid.Column="1" 
+                                              ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                    XPath=plasterboard_walls/enum_material, 
+                                                                    Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedThey},
+                                                     Mode=OneWay}">
+
+                                        <ComboBox.SelectedItem>
+                                            <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                                <Binding Mode="OneWay" />
+                                                <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.SelectedItem>
+
+                                        <ComboBox.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/floors/floor1/plasterboard/plasterboard_walls/enum_material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.Tag>
+
+                                    </ComboBox>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2"
+                                                HorizontalAlignment="Left">
+                                        
+                                        <Label>Слои:</Label>
+
+                                        <xctk:IntegerUpDown Width="100"
+                                                    Increment="1"
+                                                    Value="{Binding Path=SelectedMaterial.Quantity,
+                                                                    Mode=TwoWay}"
+                                                    Minimum="0">
+
+                                        </xctk:IntegerUpDown>
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                                <!-- Гипсокартон потолок -->
+
+                                <Grid DataContext="{Binding Path=SubCategories[plasterboard_ceiling]}">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="Гипсокартон потолок" Grid.Column="0"/>
+                                    
+                                    <ComboBox x:Name="cb1stFloorPlasterboardCeilingCategory" Grid.Column="1" 
+                                              ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                    XPath=plasterboard_ceiling/enum_material, 
+                                                                    Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedHe},
+                                                     Mode=OneWay}">
+
+                                        <ComboBox.SelectedItem>
+                                            <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                                <Binding Mode="OneWay" />
+                                                <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.SelectedItem>
+
+                                        <ComboBox.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/floors/floor1/plasterboard/plasterboard_ceiling/enum_material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.Tag>
+
+                                    </ComboBox>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2"
+                                                HorizontalAlignment="Left">
+                                        
+                                        <Label>Слои:</Label>
+
+                                        <xctk:IntegerUpDown Width="100"
+                                                    Increment="1"
+                                                    Value="{Binding Path=SelectedMaterial.Quantity,
+                                                                    Mode=TwoWay}"
+                                                    Minimum="0">
+
+                                        </xctk:IntegerUpDown>
+                                        
+                                    </StackPanel>
+                                    
+                                </Grid>
+
+                            </StackPanel>
+
+                            <!-- Перекрытие первого этажа -->
+
+                            <Grid DataContext="{Binding Path=SubCategories[ceiling]}">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Перекрытие первого этажа" Grid.Column="0"/>
+                                
+                                <ComboBox x:Name="cb1stfloorCeilingCategory" Grid.Column="1"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=ceiling/material, 
+                                                                Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedIt},
+                                                     Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/floors/floor1/ceiling/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                            </Grid>
+
+                        </StackPanel>
+
+                        <!-- Второй этаж -->
+
+                        <StackPanel Orientation="Vertical"
+                                    DataContext="{Binding Path=Categories[floors].SubCategories[floor2]}">
+
+                            <Label Background="#FFE5E5E5">Второй этаж</Label>
+
+                            <!-- Стены -->
+
+                            <Grid DataContext="{Binding Path=SubCategories[walls]}">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Внешние стены -->
+
+                                <Label Content="Внешние стены" 
+                                       Grid.Row="0" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cb2stFloorExternalWallsCategory" 
+                                          Grid.Row="0" Grid.Column="1"
+                                          DataContext="{Binding Path=SubCategories[external_walls]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                               XPath=external_walls/material, 
+                                                               Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedThey},
+                                                     Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/floors/floor2/walls/external_walls/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                                <!-- Несущие стены -->
+
+                                <Label Content="Несущие стены" 
+                                       Grid.Row="1" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cb2stFloorBearingWallsCategory"
+                                          Grid.Row="1" Grid.Column="1" 
+                                          DataContext="{Binding Path=SubCategories[bearing_walls]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=bearing_walls/material, 
+                                                                Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedThey},
+                                                     Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/floors/floor2/walls/bearing_walls/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                                <!-- Ненесущие стены -->
+
+                                <Label Content="Ненесущие стены" 
+                                       Grid.Row="2" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cb2stFloorCurtainWallsCategory"
+                                          Grid.Row="2"  Grid.Column="1" 
+                                          DataContext="{Binding Path=SubCategories[curtain_walls]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=curtain_walls/material, 
+                                                                Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedThey},
+                                                     Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/floors/floor2/walls/curtain_walls/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                            </Grid>
+
+                            <!-- Гипсокартон -->
+
+                            <StackPanel Orientation="Vertical" DataContext="{Binding Path=SubCategories[plasterboard]}">
+
+                                <!-- Гипсокартон стены -->
+
+                                <Grid DataContext="{Binding Path=SubCategories[plasterboard_walls]}">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="Гипсокартон стены" Grid.Column="0"/>
+                                    <ComboBox x:Name="cb2stFloorPlasterboardWallsCategory" Grid.Column="1" 
+                                      ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                            XPath=plasterboard_walls/enum_material, 
+                                                            Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedThey},
+                                                     Mode=OneWay}">
+
+                                        <ComboBox.SelectedItem>
+                                            <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                                <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                                <Binding Mode="OneWay" />
+                                                <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.SelectedItem>
+
+                                        <ComboBox.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                 XPath="house/floors/floor2/plasterboard/plasterboard_walls/enum_material"
+                                                 Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.Tag>
+
+                                    </ComboBox>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2"
+                                                HorizontalAlignment="Left">
+                                        
+                                        <Label>Слои:</Label>
+
+                                        <xctk:IntegerUpDown Width="100"
+                                                    Increment="1"
+                                                    Value="{Binding Path=SelectedMaterial.Quantity,
+                                                                    Mode=TwoWay}"
+                                                    Minimum="0">
+
+                                        </xctk:IntegerUpDown>
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                                <!-- Гипсокартон потолок -->
+
+                                <Grid DataContext="{Binding Path=SubCategories[plasterboard_ceiling]}">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="Гипсокартон потолок" Grid.Column="0"/>
+                                    <ComboBox x:Name="cb2stFloorPlasterboardCeilingCategory" Grid.Column="1"
+                                      ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                            XPath=plasterboard_ceiling/enum_material, 
+                                                            Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedHe},
+                                                     Mode=OneWay}">
+
+                                        <ComboBox.SelectedItem>
+                                            <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                                <Binding Mode="OneWay" />
+                                                <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.SelectedItem>
+
+                                        <ComboBox.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/floors/floor2/plasterboard/plasterboard_ceiling/enum_material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.Tag>
+
+                                    </ComboBox>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2"
+                                                HorizontalAlignment="Left">
+                                        
+                                        <Label>Слои:</Label>
+
+                                        <xctk:IntegerUpDown Width="100"
+                                                    Increment="1"
+                                                    Value="{Binding Path=SelectedMaterial.Quantity,
+                                                                    Mode=TwoWay}"
+                                                    Minimum="0">
+
+                                        </xctk:IntegerUpDown>
+
+                                    </StackPanel>
+                                    
+                                </Grid>
+
+                            </StackPanel>
+
+                            <!-- Перекрытие второго этажа -->
+
+                            <Grid DataContext="{Binding Path=SubCategories[ceiling]}">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Перекрытие второго этажа" Grid.Column="0"/>
+                                
+                                <ComboBox x:Name="cb2stfloorCeilingCategory" Grid.Column="1"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=ceiling/material, 
+                                                                Mode=OneWay}"
+                                          Text="{Binding Path=SelectedMaterial.Name,
+                                                         TargetNullValue={StaticResource NotSelectedIt},
+                                                         Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/floors/floor2/ceiling/material"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                            </Grid>
+
+                        </StackPanel>
+
+                        <!-- Кровля -->
+
+                        <StackPanel Orientation="Vertical">
+
+                            <Label Background="#FFE5E5E5">Кровля</Label>
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Тип кровли -->
+
+                                <Label Content="Тип кровли" 
+                                       Grid.Column="0"/>
+
+                                <ComboBox x:Name="cbRoofType" 
+                                          Grid.Column="1" 
+                                          Style="{x:Null}"
+                                          HorizontalAlignment="Left"
+                                          Width="300"
+                                          IsEditable="True"
+                                          IsReadOnly="True"
+                                          IsTextSearchEnabled="False"
+                                          Text="{Binding Converter={StaticResource convStrToRfTp},
+                                                         Path=SelectedRoofType,
+                                                         TargetNullValue={StaticResource NotSelectedHe},
+                                                         Mode=OneWay}">
+
+                                    <ComboBoxItem>{не выбран}</ComboBoxItem>
+                                    <ComboBoxItem>Два этажа</ComboBoxItem>
+                                    <ComboBoxItem>Четыре ската</ComboBoxItem>
+                                    <ComboBoxItem>От конька</ComboBoxItem>
+                                    <ComboBoxItem>Полуторка</ComboBoxItem>
+
+                                    <ComboBox.SelectedItem>
+                                        <Binding Converter="{StaticResource convStrToRfTp}"
+                                                 ConverterParameter="select"
+                                                 UpdateSourceTrigger="PropertyChanged"
+                                                 Path="SelectedRoofType" 
+                                                 Mode="OneWayToSource" />
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource convXmlToRfTp}"
+                                                      ConverterParameter="xml"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding UpdateSourceTrigger="PropertyChanged"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     XPath="house/roof/@rooftype"
+                                                     Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                            </Grid>
+
+                            <StackPanel Orientation="Vertical"
+								        DataContext="{Binding Path=Categories[roof]}">
+
+                                <!-- Покрытие кровли -->
+                                
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="Покрытие кровли" 
+                                           Grid.Row="1" Grid.Column="0"/>
+
+                                    <ComboBox x:Name="cbRoofCoveringCategory" 
+                                              Grid.Row="1" Grid.Column="1"
+                                              DataContext="{Binding Path=SubCategories[roofing]}"
+                                              ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                    XPath=roofing/material, 
+                                                                    Mode=OneWay}"
+                                              Text="{Binding Path=SelectedMaterial.Name,
+                                                             TargetNullValue={StaticResource NotSelectedIt},
+                                                             Mode=OneWay}">
+
+                                        <ComboBox.SelectedItem>
+                                            <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                                <Binding Mode="OneWay" />
+                                                <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.SelectedItem>
+
+                                        <ComboBox.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/roof/roofing/material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.Tag>
+
+                                    </ComboBox>
+
+                                </Grid>
+
+                                <!-- Карниз -->
+
+                                <Grid DataContext="{Binding Path=SubCategories[cornice]}">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="Карниз" Grid.Column="0"/>
+
+                                    <ComboBox x:Name="cbCorniceCategory" 
+                                              Grid.Column="1"
+                                              ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                    XPath=cornices/enum_material, 
+                                                                    Mode=OneWay}"
+                                              Text="{Binding Path=SelectedMaterial.Name,
+                                                             TargetNullValue={StaticResource NotSelectedHe},
+                                                             Mode=OneWay}">
+
+                                        <ComboBox.SelectedItem>
+                                            <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                                <Binding Mode="OneWay" />
+                                                <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.SelectedItem>
+
+                                        <ComboBox.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/roof/cornice/enum_material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.Tag>
+
+                                    </ComboBox>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2"
+                                                HorizontalAlignment="Left">
+
+                                        <Label>Количество:</Label>
+
+                                        <xctk:IntegerUpDown Width="100"
+                                                            Increment="1"
+                                                            Value="{Binding Path=SelectedMaterial.Quantity,
+                                                                        Mode=TwoWay}"
+                                                            Minimum="0">
+
+                                        </xctk:IntegerUpDown>
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                                <!-- Дополнения к крыше-->
+
+                                <Grid>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Водосточная система -->
+
+                                    <Label Content="Водосточная система" 
+                                           Grid.Row="0" Grid.Column="0"/>
+
+                                    <ComboBox x:Name="cbRoofGutterCategory" 
+                                              Grid.Row="0" Grid.Column="1"
+                                              DataContext="{Binding Path=SubCategories[gutter]}"
+                                              ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                    XPath=gutters/material, 
+                                                                    Mode=OneWay}"
+                                      Text="{Binding Path=SelectedMaterial.Name,
+                                                     TargetNullValue={StaticResource NotSelectedIt},
+                                                     Mode=OneWay}">
+
+                                        <ComboBox.SelectedItem>
+                                            <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                                <Binding Mode="OneWay" />
+                                                <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.SelectedItem>
+
+                                        <ComboBox.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/roof/gutter/material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </ComboBox.Tag>
+
+                                    </ComboBox>
+
+                                    <!-- Снегодержатели -->
+
+                                    <Label Content="Снегодержатели"  
+                                           Grid.Row="1" Grid.Column="0"/>
+
+                                    <StackPanel Orientation="Vertical"
+                                                HorizontalAlignment="Left"
+                                                DataContext="{Binding Path=SubCategories[snowholders]}"
+                                                Grid.Row="1" Grid.Column="1">
+
+                                        <Label Visibility="Collapsed">
+                                            <Label.Tag>
+                                                <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                              UpdateSourceTrigger="PropertyChanged"
+                                                              Mode="TwoWay">
+                                                    <Binding Source="{StaticResource ProjectProvider}"
+                                                             XPath="house/roof/snowholders/enum_material"
+                                                             Mode="OneWay" />
+                                                    <Binding Mode="OneWay" />
+                                                </MultiBinding>
+                                            </Label.Tag>
+                                        </Label>
+
+                                        <xctk:IntegerUpDown Width="300"
+                                                            Increment="1"
+                                                            Value="{Binding Path=SelectedMaterial.Quantity,
+                                                                        Mode=TwoWay}"
+                                                            Minimum="0">
+
+                                        </xctk:IntegerUpDown>
+
+                                    </StackPanel>
+
+                                </Grid>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <!-- Прочее -->
+
+                        <StackPanel Orientation="Vertical">
+
+                            <Label Background="#FFE5E5E5">Прочее</Label>
+
+                            <!-- Наружная отделка -->
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Наружная отделка -->
+
+                                <Label Content="Наружная отделка" 
+                                       Grid.Row="0" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cbOtherExternalSidingCategory"
+                                          Grid.Row="0" Grid.Column="1" 
+                                          DataContext="{Binding Path=Categories[external_siding]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=siding/material, 
+                                                                Mode=OneWay}"
+                                          Text="{Binding Path=SelectedMaterial.Name,
+                                                         TargetNullValue={StaticResource NotSelectedIt},
+                                                         Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                 XPath="house/external_siding/material"
+                                                 Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                                <!-- Вентиляция -->
+
+                                <Label Content="Вентиляция" 
+                                       Grid.Row="1" Grid.Column="0"/>
+
+                                <StackPanel Orientation="Vertical"
+                                            HorizontalAlignment="Left"
+                                            DataContext="{Binding Path=Categories[ventilation]}"
+                                            Grid.Row="1" Grid.Column="1">
+
+                                    <Label Visibility="Collapsed">
+                                        <Label.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/ventilation/enum_material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </Label.Tag>
+                                    </Label>
+
+                                    <xctk:IntegerUpDown Width="300"
+                                                        Increment="1"
+                                                        Value="{Binding Path=SelectedMaterial.Quantity,
+                                                                        Mode=TwoWay}"
+                                                        Minimum="0">
+
+                                    </xctk:IntegerUpDown>
+
+                                </StackPanel>
+
+                                <!-- Дверь входная -->
+
+                                <Label Content="Дверь входная" 
+                                       Grid.Row="2" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cbOtherEnterDoorCategory"
+                                          Grid.Row="2" Grid.Column="1" 
+                                          DataContext="{Binding Path=Categories[enter_door]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=doors/material, 
+                                                                Mode=OneWay}"
+                                          Text="{Binding Path=SelectedMaterial.Name,
+                                                         TargetNullValue={StaticResource NotSelectedShe},
+                                                         Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                 XPath="house/enter_door/material"
+                                                 Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+                                
+                                <!-- Квадратура балкона -->
+
+                                <Label Content="Квадратура балкона"
+                                       Grid.Row="3" Grid.Column="0" />
+
+                                <StackPanel Orientation="Vertical"
+                                            HorizontalAlignment="Left"
+                                            DataContext="{Binding Path=Categories[balcony]}"
+                                            Grid.Row="3" Grid.Column="1">
+
+                                    <Label Visibility="Collapsed">
+                                        <Label.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/balcony/enum_material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </Label.Tag>
+                                    </Label>
+
+                                    <TextBox Width="300">
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     Path="SelectedMaterial.Quantity"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <!-- Квадратура террасы -->
+
+                                <Label Content="Квадратура террасы"
+                                       Grid.Row="4" Grid.Column="0" />
+
+                                <StackPanel Orientation="Vertical"
+                                            HorizontalAlignment="Left"
+                                            DataContext="{Binding Path=Categories[terrace]}"
+                                            Grid.Row="4" Grid.Column="1">
+
+                                    <Label Visibility="Collapsed">
+                                        <Label.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/terrace/enum_material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </Label.Tag>
+                                    </Label>
+
+                                    <TextBox Width="300">
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     Path="SelectedMaterial.Quantity"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <!-- Квадратура крыльца -->
+
+                                <Label Content="Квадратура крыльца"
+                                       Grid.Row="5" Grid.Column="0" />
+
+                                <StackPanel Orientation="Vertical"
+                                            HorizontalAlignment="Left"
+                                            DataContext="{Binding Path=Categories[porch]}"
+                                            Grid.Row="5" Grid.Column="1">
+
+                                    <Label Visibility="Collapsed">
+                                        <Label.Tag>
+                                            <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                          UpdateSourceTrigger="PropertyChanged"
+                                                          Mode="TwoWay">
+                                                <Binding Source="{StaticResource ProjectProvider}"
+                                                         XPath="house/porch/enum_material"
+                                                         Mode="OneWay" />
+                                                <Binding Mode="OneWay" />
+                                            </MultiBinding>
+                                        </Label.Tag>
+                                    </Label>
+
+                                    <TextBox Width="300">
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     Path="SelectedMaterial.Quantity"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                            </Grid>
+
+                        </StackPanel>
+
+                        <!-- Инфраструктура -->
+
+                        <StackPanel Orientation="Vertical">
+
+                            <Label Background="#FFE5E5E5">Инфраструктура</Label>
+
+                            <Grid DataContext="{Binding Path=Categories[infrastructure]}">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Канализация -->
+
+                                <Label Content="Канализация" 
+                                       Grid.Row="0" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cbInfrastructureSewerCategory"
+                                          Grid.Row="0" Grid.Column="1" 
+                                          DataContext="{Binding Path=SubCategories[sewer]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=sewer/material, 
+                                                                Mode=OneWay}"
+                                          Text="{Binding Path=SelectedMaterial.Name,
+                                                         TargetNullValue={StaticResource NotSelectedShe},
+                                                         Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                 XPath="house/infrastructure/sewer/material"
+                                                 Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                                <!-- Электрика -->
+
+                                <Label Content="Электрика" 
+                                       Grid.Row="1" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cbInfrastructureWiringCategory"
+                                          Grid.Row="1" Grid.Column="1" 
+                                          DataContext="{Binding Path=SubCategories[wiring]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=wiring/material, 
+                                                                Mode=OneWay}"
+                                          Text="{Binding Path=SelectedMaterial.Name,
+                                                         TargetNullValue={StaticResource NotSelectedShe},
+                                                         Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                 XPath="house/infrastructure/wiring/material"
+                                                 Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                                <!-- Отопление -->
+
+                                <Label Content="Отопление" 
+                                       Grid.Row="2" Grid.Column="0"/>
+
+                                <ComboBox x:Name="cbInfrastructureCategory"
+                                          Grid.Row="2" Grid.Column="1" 
+                                          DataContext="{Binding Path=SubCategories[heating]}"
+                                          ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                XPath=heating/material, 
+                                                                Mode=OneWay}"
+                                          Text="{Binding Path=SelectedMaterial.Name,
+                                                         TargetNullValue={StaticResource NotSelectedIt},
+                                                         Mode=OneWay}">
+
+                                    <ComboBox.SelectedItem>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                      UpdateSourceTrigger="PropertyChanged"
+                                                      Mode="TwoWay">
+                                            <Binding Path="HasChangeInMaterial" Mode="OneWayToSource" />
+                                            <Binding Mode="OneWay" />
+                                            <Binding Path="SelectedMaterial" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedItem>
+
+                                    <ComboBox.Tag>
+                                        <MultiBinding Converter="{StaticResource XmlToCBToMaterialConverter}"
+                                                  UpdateSourceTrigger="PropertyChanged"
+                                                  Mode="TwoWay">
+                                            <Binding Source="{StaticResource ProjectProvider}"
+                                                 XPath="house/infrastructure/heating/material"
+                                                 Mode="OneWay" />
+                                            <Binding Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ComboBox.Tag>
+
+                                </ComboBox>
+
+                            </Grid>
+
+                        </StackPanel>
+
+                        <!-- Окна -->
+
+                        <StackPanel Orientation="Vertical"
+                                    DataContext="{Binding Path=Categories[floors]}">
+
+                            <StackPanel.Resources>
+
+                                <Style TargetType="ListBoxItem" x:Key="lstbiStyle">
+                                    <Setter Property="Focusable" Value="False" />
+                                    <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+                                </Style>
+
+                                <DataTemplate x:Key="lstbiDataTemplate">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Click="DeleteWindow" 
+                                                Content="Удалить"/>
+
+                                        <ComboBox ItemsSource="{Binding Source={StaticResource MaterialsProvider}, 
+                                                                        XPath=windows/window, 
+                                                                        Mode=OneWay}"
+                                                  Style="{x:Null}"
+                                                  Width="300"
+                                                  IsEditable="True"
+                                                  IsReadOnly="True"
+                                                  IsTextSearchEnabled="False"
+                                                  Text="{Binding Path=Name,
+                                                                 TargetNullValue={StaticResource NotSelectedIt},
+                                                                 Mode=OneWay}">
+
+                                            <ComboBox.SelectedItem>
+                                                <MultiBinding Converter="{StaticResource SelectedItemToMakeChangesConverter}"
+                                                              UpdateSourceTrigger="PropertyChanged"
+                                                              Mode="TwoWay">
+                                                    <Binding Path="HasChanges" Mode="OneWayToSource" />
+                                                    <Binding Path="ParentCategory" Mode="OneWay" />
+                                                    <Binding Mode="OneWay" />
+                                                </MultiBinding>
+                                            </ComboBox.SelectedItem>
+
+                                        </ComboBox>
+
+                                        <Label>Плёнка:</Label>
+
+                                        <CheckBox IsThreeState="False"
+                                                  IsEnabled="{Binding Converter={StaticResource convWMHFEnabled},
+                                                                      Path=Name, 
+                                                                      Mode=OneWay}"
+                                                  IsChecked="{Binding Path=HasFilm,
+                                                                      Mode=TwoWay}">
+                                        </CheckBox>
+
+                                        <Label>Количество:</Label>
+
+                                        <xctk:IntegerUpDown Grid.Column="2" 
+                                                            Width="100"
+                                                            HorizontalAlignment="Left"
+                                                            Increment="1"
+                                                            Value="{Binding Path=Quantity,
+                                                                            Mode=TwoWay}"
+                                                            Minimum="0">
+
+                                        </xctk:IntegerUpDown>
+                                    </StackPanel>
+                                </DataTemplate>
+                                
+                            </StackPanel.Resources>
+
+                            <!-- Окна первого этажа -->
+
+                            <StackPanel x:Name="sp1stFloorWindows"  Orientation="Vertical"
+                                        DataContext="{Binding Path=SubCategories[floor1].SubCategories[windows]}">
+
+                                <Label Background="#FFE5E5E5">Окна первого этажа</Label>
+
+                                <Button x:Name="btnAddWindowIn1stFloor" 
+                                        Width="100"
+                                        HorizontalAlignment="Left"
+                                        Content="Добавить окно"
+                                        Click="AddWindow"/>
+
+                                <ListBox x:Name="lstb1stFloorWindows"
+                                         ItemsSource="{Binding Path=SelectedMaterials}"
+                                         HorizontalAlignment="Left"
+                                         Style="{StaticResource lstbStyle}"
+                                         ItemContainerStyle="{StaticResource lstbiStyle}"
+                                         ItemTemplate="{StaticResource lstbiDataTemplate}">
+                                </ListBox>
+
+                            </StackPanel>
+
+                            <!-- Окна второго этажа -->
+
+                            <StackPanel x:Name="sp2stFloorWindows"  Orientation="Vertical"
+                                        DataContext="{Binding Path=SubCategories[floor2].SubCategories[windows]}">
+
+                                <Label Background="#FFE5E5E5">Окна второго этажа</Label>
+
+                                <Button x:Name="btnAddWindowIn2stFloor"
+                                        Width="100"
+                                        HorizontalAlignment="Left"
+                                        Content="Добавить окно"
+                                        Click="AddWindow"/>
+
+                                <ListBox x:Name="lstb2stFloorWindows"
+                                         ItemsSource="{Binding Path=SelectedMaterials}"
+                                         HorizontalAlignment="Left"
+                                         Style="{StaticResource lstbStyle}"
+                                         ItemContainerStyle="{StaticResource lstbiStyle}"
+                                         ItemTemplate="{StaticResource lstbiDataTemplate}">
+                                </ListBox>
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Height="20" />
+
+                    </StackPanel>
+
+                </ScrollViewer>
+                
+            </TabItem>
+            
+            <!-- Страница расчёта -->
+
+            <TabItem Header="Расчёт">
+                <ScrollViewer x:Name="scvCalculations" Height="760"
+						      VerticalScrollBarVisibility="Visible">
+                    
+                    <StackPanel x:Name="spCalculations" Orientation="Vertical">
+
+                        <StackPanel x:Name="spCalculationHeaderParams" Orientation="Vertical"
+                                    Height="300">
+
+                            <StackPanel.Resources>
+
+                                <Style TargetType="TextBox">
+                                    <Setter Property="Width" Value="150"/>
+                                </Style>
+                                
+                            </StackPanel.Resources>
+                            
+                            <Label>Параметры дома</Label>
+
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+
+                                <Grid.Resources>
+
+                                    <local:StringToRoofTypeConverter x:Key="StringToRoofTypeConverter"/>
+
+                                </Grid.Resources>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1.3*" />
+                                    <RowDefinition Height="1.3*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+                                    
+                                    <Label Content="Длина дома" />
+                                    
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="HouseLength" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="house_length"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/house_length"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+                                    
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="1"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+                                    
+                                    <Label Content="Ширина дома" />
+                                    
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="HouseWidth" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="house_width"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/house_width"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+                                    
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="2"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+                                    
+                                    <Label Content="П.м. ростверка" />
+                                    
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="GrillageMolding" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="grillage_molding"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/grillage_molding"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+                                    
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="0"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="Высота 1-го этажа" />
+                                    
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="Floor1Height" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="floor1_height"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/floor1_height"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="1"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="П.м. несущих стен 1-го этажа" />
+                                    
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="Floor1BearingWallsMolding" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="floor1_bearing_walls_molding"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/floor1_bearing_walls_molding"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="2"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="П.м. ненесущих стен 1-го этажа" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="Floor1CurtainWallsMolding" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="floor1_curtain_walls_molding"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/floor1_curtain_walls_molding"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="3"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="П.м. внешних стен 1-го этажа" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="Floor1ExternalWallsMolding" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="floor1_external_walls_molding"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/floor1_external_walls_molding"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="0"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="Высота 2-го этажа" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="Floor2Height" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="floor2_height"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/floor2_height"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="1"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="П.м. несущих стен 2-го этажа" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="Floor2BearingWallsMolding" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="floor2_bearing_walls_molding"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/floor2_bearing_walls_molding"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="2"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="П.м. ненесущих стен 2-го этажа" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="Floor2CurtainWallsMolding" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="floor2_curtain_walls_molding"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/floor2_curtain_walls_molding"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="3"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="П.м. внешних стен 2-го этажа" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="Floor2ExternalWallsMolding" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="floor2_external_walls_molding"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/floor2_external_walls_molding"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="3" Grid.Column="0"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="Длина конька" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="RidgeLength" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="ridge_length"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/ridge_length"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel> 
+
+                                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical"
+                                            HorizontalAlignment="Stretch">
+
+                                    <Label Content="Длина ската" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="SlopeLength" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="slope_length"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/slope_length"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="3" Grid.Column="2"
+                                            Orientation="Vertical" Height="50" Margin="5,5,5,5">
+
+                                    <Label Content="Ширина ската" />
+
+                                    <TextBox>
+                                        <TextBox.Text>
+                                            <Binding Converter="{StaticResource convStrToDec}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     Path="SlopeWidth" 
+                                                     Mode="TwoWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+
+                                        <TextBox.Tag>
+                                            <Binding Converter="{StaticResource convXmlToTxtbToHP}"
+                                                     ConverterParameter="slope_width"
+                                                     Source="{StaticResource ProjectProvider}"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     XPath="house_params/slope_width"
+                                                     Mode="OneWay">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Tag>
+                                    </TextBox>
+
+                                </StackPanel>
+
+                            </Grid>
+                        </StackPanel>
+                        
+                        <!--Блок частей дома-->
+                        
+                        <StackPanel x:Name ="HousePartsBlocksSP" Orientation="Vertical"
+                                    HorizontalAlignment="Stretch" Margin="0,5,0,2.5">
+
+                            <!--<Button Height="30" Name ="btnTest" Click="BtnTest_Click"></Button>-->
+                        </StackPanel>
+                        
+                        <!-- Пункты сметы -->
+
+                        <StackPanel>
+
+                            <StackPanel.Resources>
+
+                                <DataTemplate x:Key="lstbiEstimateItem">
+
+                                    <StackPanel>
+
+                                        <Label Content="{Binding Path=Name,
+                                                                 Mode=OneWay}" />
+
+                                        <Grid>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="0.6*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="100"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock x:Name="txtName"
+                                                   Grid.Column="0"
+                                                 Width="100"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   Margin="2.5,2.5,2.5,2.5"
+                                                   Text="{Binding Path=Name, Mode=OneWay}"/>
+
+                                            <TextBox x:Name="tbPrice"
+                                                 Grid.Column="1"
+                                                 Width="100"
+                                                 Height="20" 
+                                                 Margin="2.5,2.5,2.5,2.5">
+
+                                                <TextBox.Text>
+                                                    <Binding Converter="{StaticResource convStrToDec}"
+                                                             StringFormat="{}{0:F2}"
+                                                         UpdateSourceTrigger="PropertyChanged"
+                                                         Path="Price" 
+                                                         Mode="TwoWay" >
+                                                        <Binding.ValidationRules>
+                                                            <local:NaturalNumberValidationRule/>
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+
+                                            </TextBox>
+
+                                            <TextBox x:Name="tbQuantity"
+                                                 Grid.Column="2"
+                                                 Width="100"
+                                                 Height="20" 
+                                                 Margin="2.5,2.5,2.5,2.5" >
+
+                                                <TextBox.Text>
+                                                    <Binding Converter="{StaticResource convStrToDec}"
+                                                         UpdateSourceTrigger="PropertyChanged"
+                                                         Path="PhysicalQuantity" 
+                                                         Mode="TwoWay" >
+                                                        <Binding.ValidationRules>
+                                                            <local:NaturalNumberValidationRule/>
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+
+                                            </TextBox>
+
+                                            <Label Grid.Column="3" 
+                                                   VerticalAlignment="Center"
+                                                 Width="75"
+                                                   Content="{Binding Path=Measure}" />
+
+                                            <TextBox x:Name="tbSummary"
+                                                 Grid.Column="4"
+                                                 Width="100"
+                                                 Height="20" 
+                                                 Margin="2.5,2.5,2.5,2.5" >
+
+                                                <TextBox.Text>
+                                                    <Binding Converter="{StaticResource convStrToDbl}"
+                                                             StringFormat="{}{0:F2}"
+                                                         UpdateSourceTrigger="PropertyChanged"
+                                                         Path="Summary" 
+                                                         Mode="TwoWay" >
+                                                        <Binding.ValidationRules>
+                                                            <local:NaturalNumberValidationRule/>
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+
+                                            </TextBox>
+
+                                            <TextBox x:Name="tbMarkup"
+                                                 Grid.Column="5"
+                                                 Width="100"
+                                                 Height="20" 
+                                                 Margin="2.5,2.5,2.5,2.5" >
+
+                                                <TextBox.Text>
+                                                    <Binding Converter="{StaticResource convStrToDbl}"
+                                                             StringFormat="{}{0:F2}"
+                                                         UpdateSourceTrigger="PropertyChanged"
+                                                         Path="Markup" 
+                                                         Mode="TwoWay" >
+                                                        <Binding.ValidationRules>
+                                                            <local:NaturalNumberValidationRule/>
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+
+                                            </TextBox>
+
+                                            <Button x:Name="btnRecalculateParams"
+                                                    Grid.Column="6"
+                                                 Width="75"
+                                                    DockPanel.Dock="Top"
+                                                    Margin="10,10,10,10" 
+                                                    Click="btnRecalculateParams_Click">
+                                                <TextBlock TextWrapping="WrapWithOverflow">
+                                                    Восстановить количество по формуле
+                                                </TextBlock>
+                                            </Button>
+
+                                        </Grid>
+                                        
+                                    </StackPanel>
+
+                                </DataTemplate>
+
+                                <DataTemplate x:Key="lstbiMaterialsWithinCategories">
+
+                                    <StackPanel Orientation="Vertical" Height="Auto"
+                                                DataContext="{Binding}">
+
+                                        <Label Content="{Binding Path=ParentCategory.Name,
+                                                                 Mode=OneWay}" 
+                                               Background="#F5F5F5"/>
+
+                                        <Label Content="{Binding Path=Name,
+                                                                 Mode=OneWay}"/>
+
+                                        <Grid Background="#FFE5E5E5">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="0.6*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="100"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="0" Content="Название"/>
+                                            <Label Grid.Column="1" Content="Цена"/>
+                                            <Label Grid.Column="2" Content="Количество"/>
+                                            <Label Grid.Column="3" Content="Ед. изм."/>
+                                            <Label Grid.Column="4" Content="Сумма"/>
+                                            <Label Grid.Column="5" Content="Наценка"/>
+
+                                        </Grid>
+
+                                        <ListBox ItemsSource="{Binding Path=EstimateItems,
+                                                                        Mode=OneWay}"
+                                                 ItemTemplate="{StaticResource lstbiEstimateItem}" />
+
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <Label>Итого:</Label>
+
+                                            <TextBox x:Name="tbSummary"
+                                                 Width="100" 
+                                                 Height="20" 
+                                                 Margin="2.5,2.5,2.5,2.5" >
+
+                                                <TextBox.Text>
+                                                    <Binding Converter="{StaticResource convStrToDec}"
+                                                             UpdateSourceTrigger="PropertyChanged"
+                                                             Path="Summary" 
+                                                             Mode="TwoWay" >
+                                                        <Binding.ValidationRules>
+                                                            <local:NaturalNumberValidationRule/>
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+
+                                            </TextBox>
+
+                                        </StackPanel>
+
+                                    </StackPanel>
+
+                                </DataTemplate>
+
+                                <DataTemplate x:Key="lstbiMaterialWithinCategory">
+
+                                    <StackPanel Orientation="Vertical" Height="Auto"
+                                                DataContext="{Binding}">
+
+                                        <Label Content="{Binding Path=Name,
+                                                                 Mode=OneWay}"/>
+
+                                        <Grid>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="0.6*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="100"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="0" Content="Название"/>
+                                            <Label Grid.Column="1" Content="Цена"/>
+                                            <Label Grid.Column="2" Content="Количество"/>
+                                            <Label Grid.Column="3" Content="Ед. изм."/>
+                                            <Label Grid.Column="4" Content="Сумма"/>
+                                            <Label Grid.Column="5" Content="Наценка"/>
+
+                                        </Grid>
+
+                                        <ListBox ItemsSource="{Binding Path=EstimateItems,
+                                                                        Mode=OneWay}"
+                                                 ItemTemplate="{StaticResource lstbiEstimateItem}" />
+
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <Label>Итого:</Label>
+
+                                            <TextBox x:Name="tbSummary"
+                                                 Width="100" 
+                                                 Height="20" 
+                                                 Margin="2.5,2.5,2.5,2.5" >
+
+                                                <TextBox.Text>
+                                                    <Binding Converter="{StaticResource convStrToDec}"
+                                                             UpdateSourceTrigger="PropertyChanged"
+                                                             Path="Summary" 
+                                                             Mode="TwoWay" >
+                                                        <Binding.ValidationRules>
+                                                            <local:NaturalNumberValidationRule/>
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+
+                                            </TextBox>
+
+                                        </StackPanel>
+
+                                    </StackPanel>
+
+                                </DataTemplate>
+
+                            </StackPanel.Resources>
+
+                            <ListBox x:Name="lstbCategoriesSingle"
+                                     ItemTemplate="{StaticResource lstbiMaterialsWithinCategories}" />
+
+                            <Label Content="Окна первого этажа" 
+                                   Background="#F5F5F5"/>
+
+                            <ListBox x:Name="lstb1stFloorWindowsCategory"
+                                     ItemTemplate="{StaticResource lstbiMaterialWithinCategory}" />
+
+                            <Label Content="Окна второго этажа" 
+                                   Background="#F5F5F5"/>
+
+                            <ListBox x:Name="lstb2ndFloorWindowsCategory"
+                                     ItemTemplate="{StaticResource lstbiMaterialWithinCategory}" />
+
+                        </StackPanel>
+                        
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            
+            <TabItem x:Name="tabpEstimate" Header="Предварительная смета">
+
+                <TabItem.Resources>
+
+                    <Style TargetType="TextBox">
+                        <Setter Property="Height" Value="20"></Setter>
+                        <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+                    </Style>
+
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextWrapping" Value="Wrap"></Setter>
+                        <EventSetter Event="MouseWheel" Handler="Control_MouseWheelHandler" />
+                    </Style>
+
+                    <Style TargetType="DataGrid">
+                        <Setter Property="AutoGenerateColumns" Value="False"/>
+                        <Setter Property="CanUserAddRows" Value="False"/>
+                    </Style>
+
+                    <StackPanel x:Key="spMaterial" x:Shared="False">
+                        <Label Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1,AncestorType=StackPanel}, Path=Tag}"/>
+                        <DataGrid ItemsSource="{Binding}">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTemplateColumn Header="Описание">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding  Path=Description, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="Цена">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding  Path=Price, Mode=OneWay, Converter={StaticResource convStrToDbl}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="Количество">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding  Path=PhysicalQuantity, Mode=OneWay, Converter={StaticResource convStrToDbl}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="Ед. изм.">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding  Path=Measure, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="Итого">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding  Path=Summary, Mode=OneWay, Converter={StaticResource convStrToDbl}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+                    </StackPanel>
+
+                </TabItem.Resources>
+
+                <ScrollViewer Height="360"
+						      VerticalScrollBarVisibility="Visible">
+                    <StackPanel x:Name="spEstimate">
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+    </StackPanel>
+</Window>

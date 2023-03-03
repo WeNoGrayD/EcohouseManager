@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Проект-->
+<root>
+	<meta name="Мета">
+		<!--Имя клиента-->
+		<customer name="Имя клиента"/>
+		<!--Телефон-->
+		<phone name="Телефон"/>
+		<!--Населенный пункт-->
+		<location name="Населенный пункт"/>
+		<!--Расстояние в километрах-->
+		<distance name="Расстояние в километрах"/>
+		<!--Площадь в метрах квадратных-->
+		<area name="Площадь"/>
+	</meta>
+	<house name="Проект">
+		<!--Фундамент-->
+		<base name="Фундамент">
+			<material name="Что-то там (1)" id="1" is_loaded="true">
+				<name>Фундамент бетономешалка 400*800 + бур.сваи</name>
+				<est_items>
+					<est_item>
+						<name>Мешает бетон</name>
+						<description>см. выше</description>
+						<price>0</price>
+						<quantity>0</quantity>
+						<measure>м</measure>
+						<price rooftype="2floors">0</price>
+						<price rooftype="4skata">0</price>
+						<price rooftype="polutorka">0</price>
+						<price rooftype="otkonka">0</price>
+					</est_item>
+				</est_items>
+				<summary>2131230</summary>
+			</material>
+		</base>
+		<!--Цоколь-->
+		<basement name="Цоколь">
+			<!--Цокольное перекрытие-->
+			<ceiling name="Цокольное перекрытие">
+				<material name="Что-то там (2)" id="1"/>
+			</ceiling>
+			<!--Цокольная отделка-->
+			<siding name="Цокольная отделка">
+				<material name="Что-то там (3)" id="0"/>
+			</siding>
+		</basement>
+		<!--Этажи-->
+		<floors name="Этажи">
+			<!--Первый этаж-->
+			<floor1 name="Первый этаж">
+				<!--Стены-->
+				<walls name="Стены">
+					<!--Несущие стены-->
+					<bearing_walls name="Несущие стены">
+						<material name="Что-то там (4)"/>
+					</bearing_walls>
+					<!--Не несущие стены-->
+					<curtain_walls name="Не несущие стены">
+						<material name="Что-то там (5)"/>
+					</curtain_walls>
+					<!--Внешние стены-->
+					<external_walls name="Внешние стены">
+						<material name="Что-то там (6)"/>
+					</external_walls>
+				</walls>
+				<!--Гипсокартон-->
+				<drywall name="Гипсокартон">
+					<!--Гипсокартон стены-->
+					<walls name="Гипсокартон стены" layers="1">
+						<material name="Что-то там (7)"/>
+					</walls>
+					<!--Гипсокартон потолок-->
+					<ceiling name="Гипсокартон потолок" layers="1">
+						<material name="Что-то там (8)"/>
+					</ceiling>
+				</drywall>
+				<!--Перекрытие первого этажа-->
+				<ceiling name="Перекрытие первого этажа">
+					<material name="Что-то там (9)"/>
+				</ceiling>
+				<!--Окна-->
+				<windows name="Окна">
+					<material name="Что-то там (10)"/>
+				</windows>
+			</floor1>
+			<!--Второй этаж-->
+			<floor2 name="Второй этаж">
+				<!--Стены-->
+				<walls name="Стены">
+					<!--Несущие стены-->
+					<bearing_walls name="Несущие стены">
+						<material name="Что-то там (11)"/>
+					</bearing_walls>
+					<!--Не несущие стены-->
+					<curtain_walls name="Не несущие стены">
+						<material name="Что-то там (12)"/>
+					</curtain_walls>
+					<!--Внешние стены-->
+					<external_walls name="Внешние стены">
+						<material name="Что-то там (13)"/>
+					</external_walls>
+				</walls>
+				<!--Гипсокартон-->
+				<drywall name="Гипсокартон">
+					<!--Гипсокартон стены-->
+					<walls name="Гипсокартон стены" layers="1">
+						<material name="Что-то там (14)"/>
+					</walls>
+					<!--Гипсокартон потолок-->
+					<ceiling name="Гипсокартон потолок" layers="1">
+						<material name="Что-то там (15)"/>
+					</ceiling>
+				</drywall>
+				<!--Перекрытие второго этажа-->
+				<ceiling name="Перекрытие второго этажа">
+					<material name="Что-то там (16)"/>
+				</ceiling>
+				<!--Окна-->
+				<windows name="Окна">
+					<material name="Что-то там (17)"/>
+				</windows>
+			</floor2>
+		</floors>
+		<!--Кровля-->
+		<roof name="Кровля" roofing_film="false">
+			<!--Тип кровли-->
+			<rooftype name="Тип кровли">
+				<material name="Что-то там (18)"/>
+			</rooftype>
+			<!--Покрытие кровли-->
+			<covering name="Покрытие кровли">
+				<material name="Что-то там (19)"/>
+			</covering>
+			<!--Карниз-->
+			<cornice name="Карниз" quantity="0">
+				<material name="Что-то там (20)"/>
+			</cornice>
+			<!--Дополнения к кровле-->
+			<!--Водосточная система-->
+			<gutter name="Водосточная система">
+				<material name="Что-то там (21)"/>
+			</gutter>
+			<!--Снегодержатели-->
+			<snowholders name="Снегодержатели">
+				<material name="Что-то там (22)"/>
+			</snowholders>
+		</roof>
+		<!--Наружная отделка-->
+		<external_siding name="Наружная отделка">
+			<material name="Что-то там (23)" id="0"/>
+		</external_siding>
+		<!--Вентиляция-->
+		<ventilation name="Вентиляция">
+			<material name="Что-то там (24)"/>
+		</ventilation>
+		<!--Дверь входная-->
+		<door name="Дверь входная">
+			<material name="Что-то там (25)"/>
+		</door>
+		<!--Квадратура балкона в метрах квадратных-->
+		<balcony name="Квадратура балкона"/>
+		<!--Квадратура терассы в метрах квадратных-->
+		<terrace name="Квадратура терассы"/>
+		<!--Квадратура крыльца в метрах квадратных-->
+		<porch name="Квадратура крыльца"/>
+		<!--Коммуникации-->
+		<infrastructure name="Коммуникации">
+			<!--Канализация-->
+			<sewer name="Канализация">
+				<material name="Что-то там (26)"/>
+			</sewer>
+			<!--Электрика-->
+			<wiring name="Электрика">
+				<material name="Что-то там (27)"/>
+			</wiring>
+			<!--Отопление-->
+			<heating name="Отопление">
+				<material name="Что-то там (28)"/>
+			</heating>
+		</infrastructure>
+	</house>
+</root>

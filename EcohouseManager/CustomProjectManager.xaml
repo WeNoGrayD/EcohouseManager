@@ -1,0 +1,275 @@
+﻿<Window x:Class="EcohouseManager.CustomProjectManager" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EcohouseManager" 
+        mc:Ignorable="d" 
+        Title="CustomProjectManager" Height="800" Width="1024">
+    
+	<Window.Resources>
+        
+		<StackPanel x:Key="trviMaterialHeader" x:Shared="False" Orientation="Horizontal">
+			<Label>Материал:</Label>
+			<TextBox Text="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+		</StackPanel>
+
+        <StackPanel x:Key="trviEstimateItemHeader" x:Shared="False" Orientation="Horizontal">
+            <Label>Пункт сметы:</Label>
+            <Label Content="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+        <ContextMenu x:Key="cntxtConst">
+            <MenuItem Header="Удалить константу" Click="DeleteConstant"/>
+        </ContextMenu>
+
+    </Window.Resources>
+    
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="4.99*"/>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="2.99*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.20*"/>
+			<RowDefinition Height="2.09*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="2.19*"/>
+		</Grid.RowDefinitions>
+		<Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+			<MenuItem Header="Обновить материалы" Click="Update_File" Tag="Materials.xml"/>
+			<Separator/>
+			<MenuItem Header="Обновить переменные" Click="Update_File" Tag="Variables.xml"/>
+			<Separator/>
+			<MenuItem Header="Закрыть и сохранить изменения" Click="CloseAndSave"/>
+			<Separator/>
+			<MenuItem Header="Показать поддерживаемые команды" Click="SupportingCommands_Show" HorizontalAlignment="Right"/>
+		</Menu>
+		<StackPanel x:Name="spEditingEstimateItem" Grid.Row="1" Grid.Column="0" Orientation="Vertical" IsEnabled="False">
+			<Label>
+                Редактор пункта сметы
+            </Label>
+			<Grid Grid.Row="0">
+                
+                <Grid.Resources>
+                    <local:CheckingFormulaOnUnknownVariablesConverter x:Key="converterQuantityFormula1Checking"/>
+                    <local:CheckingFormulaOnUnknownVariablesConverter x:Key="converterQuantityFormula2Checking"/>
+                    <local:CheckingFormulaOnUnknownVariablesConverter x:Key="converterQuantityFormula3Checking"/>
+                    <local:CheckingFormulaOnUnknownVariablesConverter x:Key="converterQuantityFormula4Checking"/>
+                </Grid.Resources>
+                
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="4*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="0.6*"/>
+				</Grid.ColumnDefinitions>
+                
+				<Label Grid.Row="0" Grid.Column="0" Margin="2,3,2,3">
+                    Название
+                </Label>
+				<TextBox Grid.Row="1" Grid.Column="0" Margin="2,3,2,3" 
+                         Text="{Binding Path=Name.Value, 
+                                        Mode=TwoWay, 
+                                        UpdateSourceTrigger=PropertyChanged}"/>
+				
+                <Label Grid.Row="0" Grid.Column="1" Margin="2,3,2,3">
+                    Цена
+                </Label>
+                <TextBox  Margin="2,3,2,3"
+                          Grid.Row="1" Grid.Column="1">
+                    <TextBox.Text>
+                        <Binding Path="PriceFormula.Value"
+                                 Mode="TwoWay"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:NaturalNumberValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Label Grid.Row="0" Grid.Column="2" Margin="2,3,2,3">
+                    Ед. изм.
+                </Label>
+				<ComboBox Grid.Row="1" Grid.Column="3" Margin="2,3,2,3" Text="{Binding Path=Measure.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+					<ComboBoxItem>{нет}</ComboBoxItem>
+					<ComboBoxItem>м</ComboBoxItem>
+					<ComboBoxItem>м кв.</ComboBoxItem>
+					<ComboBoxItem>м куб.</ComboBoxItem>
+					<ComboBoxItem>шт.</ComboBoxItem>
+					<ComboBoxItem>компл.</ComboBoxItem>
+				</ComboBox>
+                
+                <Label x:Name="lbQuantityTitle" 
+                       Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="2,3,2,3">
+                    Формула количества
+                </Label>
+
+                <Grid x:Name="grQuantityFormulas" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="0"/>
+						<RowDefinition Height="0"/>
+						<RowDefinition Height="0"/>
+					</Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3.25*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Margin="2,3,2,3">
+						Полные 2 этажа
+					</Label>
+					<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Margin="2,3,2,3" x:Name="txtbQuantityFormula1" Width="300" Text="{Binding Path=QuantityFormula1.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Image x:Name="imgQuantityFormula1" Source="{Binding ElementName=txtbQuantityFormula1, Path=Text, Mode=OneWay, Converter={StaticResource converterQuantityFormula1Checking}}">
+							<Image.ToolTip>
+                                <ToolTip Content="{Binding Source={StaticResource converterQuantityFormula1Checking}, Path=UnknownVarsMessage, Mode=OneWay}"/>
+							</Image.ToolTip>
+						</Image>
+					</StackPanel>
+
+                    <Label Grid.Row="1" Grid.Column="0" Margin="2,3,2,3">
+                        Четыре ската
+                    </Label>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Margin="2,3,2,3" x:Name="txtbQuantityFormula2" Width="300" Text="{Binding Path=QuantityFormula2.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Image x:Name="imgQuantityFormula2" Source="{Binding ElementName=txtbQuantityFormula2, Path=Text, Mode=OneWay, Converter={StaticResource converterQuantityFormula2Checking}}">
+                            <Image.ToolTip>
+                                <ToolTip Content="{Binding Source={StaticResource converterQuantityFormula2Checking}, Path=UnknownVarsMessage, Mode=OneWay}"/>
+                            </Image.ToolTip>
+                        </Image>
+                    </StackPanel>
+
+                    <Label Grid.Row="2" Grid.Column="0" Margin="2,3,2,3">
+                        Полуторка
+                    </Label>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Margin="2,3,2,3" x:Name="txtbQuantityFormula3" Width="300" Text="{Binding Path=QuantityFormula3.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Image x:Name="imgQuantityFormula3" Source="{Binding ElementName=txtbQuantityFormula3, Path=Text, Mode=OneWay, Converter={StaticResource converterQuantityFormula3Checking}}">
+                            <Image.ToolTip>
+                                <ToolTip Content="{Binding Source={StaticResource converterQuantityFormula3Checking}, Path=UnknownVarsMessage, Mode=OneWay}"/>
+                            </Image.ToolTip>
+                        </Image>
+                    </StackPanel>
+
+                    <Label Grid.Row="3" Grid.Column="0" Margin="2,3,2,3">
+                        От конька
+                    </Label>
+                    <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Margin="2,3,2,3" x:Name="txtbQuantityFormula4" Width="300" Text="{Binding Path=QuantityFormula4.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Image x:Name="imgQuantityFormula4" Source="{Binding ElementName=txtbQuantityFormula4, Path=Text, Mode=OneWay, Converter={StaticResource converterQuantityFormula4Checking}}">
+                            <Image.ToolTip>
+                                <ToolTip Content="{Binding Source={StaticResource converterQuantityFormula4Checking}, Path=UnknownVarsMessage, Mode=OneWay}"/>
+                            </Image.ToolTip>
+                        </Image>
+                    </StackPanel>
+
+                </Grid>
+				
+			</Grid>
+			<StackPanel>
+				<Label Margin="2,3,2,3">Описание</Label>
+				<TextBox VerticalAlignment="Stretch" MinHeight="50" Margin="2,3,2,3" Text="{Binding Path=Description.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
+			</StackPanel>
+		</StackPanel>
+		<GridSplitter Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Width="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<StackPanel Orientation="Vertical" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2">
+			<Label FontWeight="Bold" Grid.Row="1" Grid.Column="2">
+                Глобальные константы
+            </Label>
+			<ListView x:Name="lstvConstants" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="175">
+				<ListView.View>
+					<GridView>
+						<GridViewColumn Header="Имя">
+							<GridViewColumn.CellTemplate>
+								<DataTemplate>
+									<TextBox Width="125" Text="{Binding Path=Name.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+								</DataTemplate>
+							</GridViewColumn.CellTemplate>
+						</GridViewColumn>
+						<GridViewColumn Header="Значение">
+							<GridViewColumn.CellTemplate>
+								<DataTemplate>
+                                    <TextBox Width="100">
+                                        <TextBox.Text>
+                                            <Binding Path="Content.Value"
+                                                     Mode="TwoWay"
+                                                     UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <local:NaturalNumberValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+								</DataTemplate>
+							</GridViewColumn.CellTemplate>
+						</GridViewColumn>
+						<GridViewColumn Header="Описание">
+							<GridViewColumn.CellTemplate>
+								<DataTemplate>
+									<TextBox Width="300" TextWrapping="WrapWithOverflow" Text="{Binding Path=Description.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+								</DataTemplate>
+							</GridViewColumn.CellTemplate>
+						</GridViewColumn>
+					</GridView>
+				</ListView.View>
+				<ListView.ItemContainerStyle>
+					<Style TargetType="ListViewItem">
+						<EventSetter Event="MouseRightButtonDown" Handler="LstviConst_ReleaseContext"/>
+						<Setter Property="ContextMenu" Value="{StaticResource cntxtConst}"/>
+					</Style>
+				</ListView.ItemContainerStyle>
+			</ListView>
+			<Button Click="AddConstant" Margin="0,5,0,5" HorizontalAlignment="Center">
+                Добавить константу
+            </Button>
+			<Label FontWeight="Bold" Grid.Row="1" Grid.Column="2">
+                Локальные переменные проекта
+            </Label>
+			<ListView x:Name="lstvVariables" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="175">
+				<ListView.View>
+					<GridView>
+						<GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Path=Name.Value}"/>
+						<GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Path=Description.Value}"/>
+					</GridView>
+				</ListView.View>
+			</ListView>
+		</StackPanel>
+		<GridSplitter Grid.Row="2" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0">
+			<Label FontWeight="Bold" Grid.Row="1" Grid.Column="0">
+                Менеджер материалов
+            </Label>
+			<TreeView x:Name="trvMaterials" DockPanel.Dock="Top"
+                      VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                      Height="175" SelectedItemChanged="TrvMaterials_SelectedItemChanged" 
+                      VirtualizingStackPanel.IsVirtualizing="False" 
+                      VirtualizingStackPanel.VirtualizationMode="Standard">
+				<TreeView.Resources>
+					<ContextMenu x:Key="cntxtCategory">
+						<MenuItem Header="Добавить материал" Click="AddMaterialToCategory"/>
+					</ContextMenu>
+					<ContextMenu x:Key="cntxtMaterial">
+						<MenuItem Header="Добавить пункт сметы" Click="AddEstimateItemToMaterial">
+                        </MenuItem>
+						<Separator/>
+						<MenuItem Header="Удалить материал" Click="DeleteMaterialFromCategory">
+                        </MenuItem>
+					</ContextMenu>
+					<ContextMenu x:Key="cntxtEstimateItem">
+						<MenuItem Header="Удалить пункт сметы" Click="DeleteEstimateItemFromMaterial">
+                        </MenuItem>
+					</ContextMenu>
+				</TreeView.Resources>
+			</TreeView>
+		</StackPanel>
+	</Grid>
+</Window>

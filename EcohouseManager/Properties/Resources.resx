@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ok_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ok-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="warning_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\warning-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="windowNodeTemplate" xml:space="preserve">
+    <value>&lt;name&gt;&lt;/name&gt;&lt;quantity&gt;&lt;/quantity&gt;&lt;price&gt;&lt;/price&gt;&lt;summary&gt;&lt;/summary&gt;</value>
+  </data>
+  <data name="xml" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!--Проект--&gt;
+&lt;root&gt;
+&lt;house name = "Проект"&gt; 
+		&lt;!--Имя клиента--&gt;
+		&lt;customer name = "Имя клиента"&gt;&lt;/customer&gt;
+		&lt;!--Телефон--&gt;
+		&lt;phone name = "Телефон"&gt;&lt;/phone&gt;
+
+		&lt;!--Населенный пункт--&gt;
+		&lt;location name = "Населенный пункт"&gt;&lt;/location&gt;
+		&lt;!--Расстояние в километрах--&gt;
+		&lt;distance name = "Расстояние в километрах"&gt;&lt;/distance&gt;
+
+		&lt;!--Площадь в метрах квадратных--&gt;
+		&lt;area name = "Площадь"&gt;&lt;/area&gt;
+
+	&lt;!--Фундамент--&gt;
+	&lt;base name = "Фундамент"&gt;&lt;/base&gt;
+
+	&lt;!--Цоколь--&gt;
+	&lt;basement name = "Цоколь"&gt;
+		&lt;!--Цокольное перекрытие--&gt;
+		&lt;celling name = "Цокольное перекрытие"&gt;&lt;/celling&gt;
+		&lt;!--Цокольная отделка--&gt;
+		&lt;siding name = "Цокольная отделка"&gt;&lt;/siding&gt;
+	&lt;/basement&gt;
+	&lt;!--Этажи--&gt;
+	&lt;floors name = "Этажи"&gt;
+		&lt;!--Первый этаж--&gt;
+		&lt;ground name = "Первый этаж"&gt;
+			&lt;!--Стены--&gt;
+			&lt;walls name = "Стены"&gt;
+				&lt;!--Внешние стены--&gt;
+				&lt;outside name = "Внешние стены"&gt;&lt;/outside&gt;
+				&lt;!--Несущие стены--&gt;
+				&lt;supporting name = "Несущие стены"&gt;&lt;/supporting&gt;
+				&lt;!--Не несущие стены--&gt;
+				&lt;common name = "Не несущие стены"&gt;&lt;/common&gt;
+			&lt;/walls&gt;
+
+			&lt;!--Гипсокартон--&gt;
+			&lt;drywall name = "Гипсокартон"&gt;
+				&lt;!--Гипсокартон стены--&gt;
+				&lt;walls name = "Гипсокартон стены" layers = "1"&gt;&lt;/walls&gt;
+				&lt;!--Гипсокартон потолок--&gt;
+				&lt;celling name = "Гипсокартон потолок" layers = "1"&gt;&lt;/celling&gt;
+			&lt;/drywall&gt;
+
+			&lt;!--Перекрытие первого этажа--&gt;
+			&lt;celling name = "Перекрытие первого этажа"&gt;&lt;/celling&gt;
+		&lt;/ground&gt;
+
+		&lt;!--Второй этаж--&gt;
+		&lt;second name = "Второй этаж"&gt;
+			&lt;!--Стены--&gt;
+			&lt;walls name = "Стены"&gt;
+				&lt;!--Внешние стены--&gt;
+				&lt;outside name = "Внешние стены"&gt;&lt;/outside&gt;
+				&lt;!--Несущие стены--&gt;
+				&lt;supporting name = "Несущие стены"&gt;&lt;/supporting&gt;
+				&lt;!--Не несущие стены--&gt;
+				&lt;common name = "Не несущие стены"&gt;&lt;/common&gt;
+			&lt;/walls&gt;
+
+			&lt;!--Гипсокартон--&gt;
+			&lt;drywall name = "Гипсокартон"&gt;
+				&lt;!--Гипсокартон стены--&gt;
+				&lt;walls name = "Гипсокартон стены" layers = "1"&gt;&lt;/walls&gt;
+				&lt;!--Гипсокартон потолок--&gt;
+				&lt;celling name = "Гипсокартон потолок" layers = "1"&gt;&lt;/celling&gt;
+			&lt;/drywall&gt;
+
+			&lt;!--Перекрытие второго этажа--&gt;
+			&lt;celling name = "Перекрытие второго этажа"&gt;&lt;/celling&gt;			
+		&lt;/second&gt;
+	&lt;/floors&gt;
+
+	&lt;!--Кровля--&gt;
+	&lt;roof name = "Кровля"&gt;
+		&lt;!--Тип кровли--&gt;
+		&lt;type name = "Тип кровли"&gt;&lt;/type&gt;
+		&lt;!--Пленка на кровлю--&gt;
+		&lt;filming name = "Пленка на кровлю"&gt;FALSE&lt;/filming&gt;
+		&lt;!--Покрытие кровли--&gt;
+		&lt;covering name = "Покрытие кровли"&gt;&lt;/covering&gt;
+		&lt;!--Карниз--&gt;
+		&lt;cornice name = "Карниз" quantity = "0"&gt;&lt;/cornice&gt;
+
+		&lt;!--Дополнения к кровле--&gt;
+		&lt;!--Водосточная система--&gt;
+		&lt;waterways name = "Водосточная система"&gt;&lt;/waterways&gt;
+		&lt;!--Снегодержатели--&gt;
+		&lt;snowholders name = "Снегодержатели"&gt;&lt;/snowholders&gt;
+	&lt;/roof&gt;
+
+	&lt;!--Наружная отделка--&gt;
+	&lt;siding name = "Наружная отделка"&gt;&lt;/siding&gt;
+
+	&lt;!--Вентиляция--&gt;
+	&lt;ventilation name = "Вентиляция"&gt;&lt;/ventilation&gt;
+
+	&lt;!--Окна--&gt;
+	&lt;windows name = "Окна"&gt;
+		&lt;!--Окна первого этажа--&gt;
+		&lt;ground name = "Окна первого этажа"&gt;
+			
+		&lt;/ground&gt;
+		&lt;!--Окна второго этажа--&gt;
+		&lt;second name = "Окна второго этажа"&gt;
+			
+		&lt;/second&gt;
+	&lt;/windows&gt;
+
+	&lt;!--Дверь входная--&gt;
+	&lt;door name = "Дверь входная"&gt;&lt;/door&gt;
+
+	&lt;!--Квадратура балкона в метрах квадратных--&gt;
+	&lt;balcony name = "Квадратура балкона"&gt;&lt;/balcony&gt;
+
+	&lt;!--Квадратура терассы в метрах квадратных--&gt;
+	&lt;terrace name = "Квадратура терассы"&gt;&lt;/terrace&gt;
+
+	&lt;!--Квадратура крыльца в метрах квадратных--&gt;
+	&lt;porch name = "Квадратура крыльца"&gt;&lt;/porch&gt;
+
+	&lt;!--Коммуникации--&gt;
+	&lt;infrastructure name = "Коммуникации"&gt;
+		&lt;!--Канализация--&gt;
+		&lt;sewer name = "Канализация"&gt;&lt;/sewer&gt;
+
+		&lt;!--Электрика--&gt;
+		&lt;electrics name = "Электрика"&gt;&lt;/electrics&gt;
+
+		&lt;!--Отопление--&gt;
+		&lt;heating name = "Отопление"&gt;&lt;/heating&gt;
+	&lt;/infrastructure&gt;
+&lt;/house&gt;
+
+&lt;calculations&gt;
+	&lt;base name = "Фундамент под ключ"&gt;
+		&lt;source path="base"&gt;
+		&lt;/source&gt;
+	&lt;/base&gt;
+	&lt;rostwerk name = "Ростверк"&gt;
+		&lt;source path="rostwerk"&gt;
+		&lt;/source&gt;
+	&lt;/rostwerk&gt;
+	&lt;windows name = "Окна (створка)"&gt;
+	&lt;/windows&gt;
+	&lt;door name = "Дверь входная"&gt;
+		&lt;source path="door"&gt;
+		&lt;/source&gt;
+	&lt;/door&gt;
+	&lt;basement name = "Цоколь"&gt;
+		&lt;source path="basement/celling"&gt;
+		&lt;/source&gt;
+		&lt;source path="basement/siding"&gt;
+		&lt;/source&gt;
+	&lt;/basement&gt;
+	&lt;ground_walls name = "Стены первого этажа СИП"&gt;
+		&lt;source path="floors/ground/walls/outside"&gt;
+		&lt;/source&gt;
+		&lt;source path="floors/ground/walls/supporting"&gt;
+		&lt;/source&gt;
+		&lt;source path="floors/ground/walls/common"&gt;
+		&lt;/source&gt;
+		&lt;source path="floors/ground/drywall/walls"&gt;
+		&lt;/source&gt;
+		&lt;source path="floors/ground/drywall/celling"&gt;
+		&lt;/source&gt;
+	&lt;/ground_walls&gt;
+	&lt;ground_celling name = "Перекрытие первого этажа СИП"&gt;
+		&lt;source path="floors/ground/celling"&gt;
+		&lt;/source&gt;
+	&lt;/ground_celling&gt;
+	&lt;second_walls name = "Стены второго этажа СИП"&gt;
+		&lt;source path="floors/second/walls/outside"&gt;
+		&lt;/source&gt;
+		&lt;source path="floors/second/walls/supporting"&gt;
+		&lt;/source&gt;
+		&lt;source path="floors/second/walls/common"&gt;
+		&lt;/source&gt;
+		&lt;source path="floors/second/drywall/walls"&gt;
+		&lt;/source&gt;
+		&lt;source path="floors/second/drywall/celling"&gt;
+		&lt;/source&gt;
+	&lt;/second_walls&gt;
+	&lt;second_celling name = "Перекрытие второго этажа СИП"&gt;
+		&lt;source path="floors/second/celling"&gt;
+		&lt;/source&gt;
+	&lt;/second_celling&gt;
+	&lt;metprods name = "Метиз"&gt;
+		&lt;source path="metprods"&gt;
+		&lt;/source&gt;		
+	&lt;/metprods&gt;
+	&lt;roof name = "Кровля"&gt;
+		&lt;source path="roof/type"&gt;
+		&lt;/source&gt;
+		&lt;source path="roof/covering"&gt;
+		&lt;/source&gt;			
+	&lt;/roof&gt;
+	&lt;сornice name = "Карниз"&gt;
+		&lt;source path="roof/cornice"&gt;
+		&lt;/source&gt;		
+	&lt;/сornice&gt;
+	&lt;additions name = "Дополнения к кровле"&gt;
+		&lt;source path="roof/waterways"&gt;
+		&lt;/source&gt;
+		&lt;source path="roof/snowholders"&gt;
+		&lt;/source&gt;				
+	&lt;/additions&gt;
+	&lt;siding name = "Фасад"&gt;
+		&lt;source path="siding"&gt;
+		&lt;/source&gt;
+	&lt;/siding&gt;
+	&lt;buildworks name = "Производство, монтаж"&gt;
+		&lt;source path="buildworks"&gt;
+		&lt;/source&gt;
+	&lt;/buildworks&gt;
+	&lt;shipping name = "Доставка"&gt;
+		&lt;source path="shipping"&gt;
+		&lt;/source&gt;
+	&lt;/shipping&gt;
+&lt;/calculations&gt;
+
+&lt;variables&gt;
+	&lt;width name="Ширина"&gt;&lt;/width&gt;
+	&lt;length name="Высота"&gt;&lt;/length&gt;
+	&lt;distance name="Расстояние до места строительства"&gt;&lt;/distance&gt;
+	&lt;area name="Площадь проекта"&gt;&lt;/area&gt;
+&lt;/variables&gt;
+&lt;/root&gt;</value>
+  </data>
+</root>

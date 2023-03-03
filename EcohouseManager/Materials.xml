@@ -1,0 +1,1021 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<materials>
+  <base name="Фундаменты" materials_type="material" depends_on_rooftype="false">
+    <material extensible_by="resources/grillage">
+      <name>Ростверк 150*200 + винт.сваи 2500мм</name>
+      <est_items>
+        <est_item>
+          <name>Сваи д108*2500мм</name>
+          <description>Винтовые металлические сваи D 108мм/2500мм/4мм/лопасть 300мм, обработанные грунтом-эмалью "3 в 1". Бурение свай ручной гидроустановкой. Обрезка в уровень, засыпка ЦПС стволов. Оголовок 180мм х 180мм, сварка оголовков. Дополнительные материалы: электроды, диск отрезной по металлу.</description>
+          <price>4100</price>
+          <measure>м куб.</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">(house_width+house_length)*124</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Пробное-геодезия</name>
+          <description />
+          <price>(distance*2)*trialkm_P+trialdr_P=</price>
+          <measure>компл.</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Доставка свай</name>
+          <description />
+          <price>(distance*2)*pileship_P=</price>
+          <measure>м</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Доставка техники</name>
+          <description />
+          <price>(distance*2)*techship_P</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>За варудо</name>
+          <description>Яре-яре дазе</description>
+          <price>trialkm_P+width</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>{без имени}</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material extensible_by="resources/grillage">
+      <name>Сваи без гарантии</name>
+      <est_items>
+        <est_item>
+          <name>Сваи д108*2500мм</name>
+          <description />
+          <price>(distance*2)*trialkm_P+trialdr_P=</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Доставка свай</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Доставка техники</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>Фундамент бетономешалка 400*800 + бур.сваи</name>
+      <est_items>
+        <est_item>
+          <name>{без имени}</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>{без имени}</name>
+      <est_items>
+        <est_item>
+          <name>{без имени}</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>конструктор</name>
+      <est_items>
+        <est_item>
+          <name>кубики</name>
+          <description>КИРИЛЛИЦА В РЕГУЛЯРНЫХ ВЫРАЖЕНИЯХ НЕ РАБОТАЕТ АААААААА</description>
+          <price>штыри*штыри</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>{материал3}</name>
+      <est_items>
+        <est_item>
+          <name>Пункт сметы 3</name>
+          <description>есть описание</description>
+          <price>12</price>
+          <measure>м кв.</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+  </base>
+  <ceiling name="Перекрытия" materials_type="material" depends_on_rooftype="true">
+    <material>
+      <name>СИП 2800*174</name>
+      <est_items>
+        <est_item>
+          <name>СИП 2800мм*174</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Шпон-зашивка</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>Каркас голый 50*150/30*150 - сверху сплошь</name>
+      <est_items>
+        <est_item>
+          <name>Каркас 50*150</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Сверху 30*150</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>Каркас полный 50*150/22*150/30*150 - снизу через раз, сверху сплошь</name>
+      <est_items>
+        <est_item>
+          <name>Каркас 50*150</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Сверху 30*150</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Снизу 22*150 через раз</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Тепло-звукоизоляция URSA TERRA</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Пленка</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">0</quantity>
+            <quantity rooftype="FourSlopes">0</quantity>
+            <quantity rooftype="RoofLorry">0</quantity>
+            <quantity rooftype="RidgeRoof">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+  </ceiling>
+  <siding name="Отделка" materials_type="material" depends_on_rooftype="true">
+    <material>
+      <name>Нет</name>
+      <est_items>
+        <est_item>
+          <name>{без имени}</name>
+          <description>{нет описания}</description>
+          <price>12456,14124</price>
+          <measure>м куб.</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">123</quantity>
+            <quantity rooftype="FourSlopes">0567</quantity>
+            <quantity rooftype="RoofLorry">sad</quantity>
+            <quantity rooftype="RidgeRoof">0ffj13+123</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>Haurberk</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Металлосайдинг RAL</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Металлосайдинг Printech</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Виниловый сайдинг</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Штукатурка</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Облицовочный кирпич</name>
+      <est_items />
+    </material>
+  </siding>
+  <walls name="Стены (неактуально)" materials_type="material" depends_on_rooftype="true">
+    <sip height="2800" width="174" tags="110">
+      <est_items />
+    </sip>
+    <sip height="2500" width="174" tags="110">
+      <est_items />
+    </sip>
+    <sip height="2800" width="124" tags="000">
+      <est_items />
+    </sip>
+    <sip height="2500" width="124" tags="000">
+      <est_items />
+    </sip>
+    <carcass height="2800" width="100" tags="001" full="голый">
+      <est_items />
+    </carcass>
+    <carcass height="2500" width="100" tags="001" full="голый">
+      <est_items />
+    </carcass>
+    <carcass height="2800" width="100" tags="001" full="полный">
+      <est_items />
+    </carcass>
+    <carcass height="2500" width="100" tags="001" full="полный">
+      <est_items />
+    </carcass>
+    <carcass height="2800" width="150" tags="010" full="голый">
+      <est_items />
+    </carcass>
+    <carcass height="2500" width="150" tags="010" full="голый">
+      <est_items />
+    </carcass>
+    <carcass height="2800" width="150" tags="010" full="полный">
+      <est_items />
+    </carcass>
+    <carcass height="2500" width="150" tags="010" full="полный">
+      <est_items />
+    </carcass>
+  </walls>
+  <external_walls name="Внешние стены" materials_type="material" depends_on_rooftype="true">&gt;
+    <sip height="2800" width="174" tags="110"><est_items /></sip><sip height="2500" width="174" tags="110"><est_items /></sip></external_walls>
+  <bearing_walls name="Несущие стены" materials_type="material" depends_on_rooftype="true">&gt;
+    <sip height="2800" width="174" tags="110"><est_items /></sip><sip height="2500" width="174" tags="110"><est_items /></sip><carcass height="2800" width="150" tags="010" full="голый"><est_items /></carcass><carcass height="2500" width="150" tags="010" full="голый"><est_items /></carcass><carcass height="2800" width="150" tags="010" full="полный"><est_items /></carcass><carcass height="2500" width="150" tags="010" full="полный"><est_items /></carcass></bearing_walls>
+  <curtain_walls name="Не несущие стены" materials_type="material" depends_on_rooftype="true">&gt;
+    <sip height="2800" width="124" tags="000"><est_items /></sip><sip height="2500" width="124" tags="000"><est_items /></sip><carcass height="2800" width="100" tags="001" full="голый"><est_items /></carcass><carcass height="2500" width="100" tags="001" full="голый"><est_items /></carcass><carcass height="2800" width="100" tags="001" full="полный"><est_items /></carcass><carcass height="2500" width="100" tags="001" full="полный"><est_items /></carcass></curtain_walls>
+  <plasterboard_walls name="Гипсокартон стены" materials_type="enum_material" depends_on_rooftype="true">
+    <enum_material>
+      <name>первый негритёнок</name>
+      <est_items>
+        <est_item>
+          <name>левая ножка</name>
+          <description>{нет описания}</description>
+          <price>1</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">4</quantity>
+            <quantity rooftype="FourSlopes">5</quantity>
+            <quantity rooftype="RoofLorry">6</quantity>
+            <quantity rooftype="RidgeRoof">7</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>правая ножка</name>
+          <description>{нет описания}</description>
+          <price>1</price>
+          <measure>м куб.</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">4</quantity>
+            <quantity rooftype="FourSlopes">5</quantity>
+            <quantity rooftype="RoofLorry">6</quantity>
+            <quantity rooftype="RidgeRoof">7</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>левая ручка</name>
+          <description>{нет описания}</description>
+          <price>1</price>
+          <measure>шт.</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">5</quantity>
+            <quantity rooftype="FourSlopes">6</quantity>
+            <quantity rooftype="RoofLorry">3</quantity>
+            <quantity rooftype="RidgeRoof">5</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>правая ручка</name>
+          <description>{нет описания}</description>
+          <price>1</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="TwoFloors">2</quantity>
+            <quantity rooftype="FourSlopes">5</quantity>
+            <quantity rooftype="RoofLorry">1</quantity>
+            <quantity rooftype="RidgeRoof">5</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </enum_material>
+  </plasterboard_walls>
+  <plasterboard_ceiling name="Гипсокартон потолок" materials_type="enum_material" depends_on_rooftype="true" />
+  <drywalls name="Гипсокартон" materials_type="material" depends_on_rooftype="true">&gt;
+    <material><name>Нет</name><est_items /></material><drywall width="9" layers="1"><est_items /></drywall><drywall width="9" layers="2"><est_items /></drywall><drywall width="12" layers="1"><est_items /></drywall><drywall width="12" layers="2"><est_items /></drywall></drywalls>
+  <roofing name="Покрытия кровли" materials_type="material" depends_on_rooftype="true">
+    <material>
+      <name>Стальной бархат</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Черепица Исп. Сиера RAL 0,5</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Профнастил С21 - RAL 0,5</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Профнастил С8 - RAL 0,5</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Мягкая черепица</name>
+      <est_items />
+    </material>
+  </roofing>
+  <cornices name="Карнизы" materials_type="enum_material" depends_on_rooftype="false">
+    <enum_material>
+      <name>Винил софит перфорированный</name>
+      <est_items />
+    </enum_material>
+    <enum_material>
+      <name>Металл софит перфорированный</name>
+      <est_items />
+    </enum_material>
+    <enum_material>
+      <name>Каракас без отделки</name>
+      <est_items />
+    </enum_material>
+  </cornices>
+  <gutters name="Водостоки" materials_type="material" depends_on_rooftype="true">
+    <material>
+      <name>Нет</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Только крюки</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Под ключ</name>
+      <est_items />
+    </material>
+  </gutters>
+  <windows name="Окна" materials_type="window" depends_on_rooftype="false">
+    <window>
+      <name>1250х1550 (2)</name>
+      <est_items>
+        <est_item>
+          <name>1250х1550 (2)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>1250х1400 (2)</name>
+      <est_items>
+        <est_item>
+          <name>1250х1400 (2)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>1000х1550 (1)</name>
+      <est_items>
+        <est_item>
+          <name>1000х1550 (1)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>1000х1400 (1)</name>
+      <est_items>
+        <est_item>
+          <name>1000х1400 (1)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>625х1550 (1)</name>
+      <est_items>
+        <est_item>
+          <name>625х1550 (1)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>625х1400 (1)</name>
+      <est_items>
+        <est_item>
+          <name>625х1400 (1)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>625х625 (1)</name>
+      <est_items>
+        <est_item>
+          <name>625х625 (1)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>1875х1550 (3)</name>
+      <est_items>
+        <est_item>
+          <name>1875х1550 (3)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>1875х1400 (3)</name>
+      <est_items>
+        <est_item>
+          <name>1875х1400 (3)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>1875х1550 (2)</name>
+      <est_items>
+        <est_item>
+          <name>1875х1550 (2)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>1875х1400 (2)</name>
+      <est_items>
+        <est_item>
+          <name>1875х1400 (2)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>900х2100 (1 двер проф)</name>
+      <est_items>
+        <est_item>
+          <name>900х2100 (1 двер проф)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>900х2100 (1 окон проф)</name>
+      <est_items>
+        <est_item>
+          <name>900х2100 (1 окон проф)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>2000х2100 (2 двер проф)</name>
+      <est_items>
+        <est_item>
+          <name>2000х2100 (2 двер проф)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>2000х2100 (3 двер проф)</name>
+      <est_items>
+        <est_item>
+          <name>2000х2100 (3 двер проф)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>700х1850 (1 глух)</name>
+      <est_items>
+        <est_item>
+          <name>700х1850 (1 глух)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>2000х1550 (2)</name>
+      <est_items>
+        <est_item>
+          <name>2000х1550 (2)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>2000х1400 (2)</name>
+      <est_items>
+        <est_item>
+          <name>2000х1400 (2)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>2000х1550 (3)</name>
+      <est_items>
+        <est_item>
+          <name>2000х1550 (3)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+    <window>
+      <name>2000х1400 (3)</name>
+      <est_items>
+        <est_item>
+          <name>2000х1400 (3)</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window>
+  </windows>
+  <doors name="Двери" materials_type="material" depends_on_rooftype="false">
+    <material>
+      <name>2100x1000x60 Техническая</name>
+      <est_items>
+        <est_item>
+          <name>2100x1000x60 Техническая</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>2100x1000x60</name>
+      <est_items>
+        <est_item>
+          <name>2100x1000x60</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>2100x1000x100</name>
+      <est_items>
+        <est_item>
+          <name>2100x1000x100</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+    <material>
+      <name>С терморазрывом</name>
+      <est_items>
+        <est_item>
+          <name>С терморазрывом</name>
+          <description>{нет описания}</description>
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </material>
+  </doors>
+  <sewer name="Типы канализаций" materials_type="material" depends_on_rooftype="false">
+    <material>
+      <name>Нет</name>
+      <est_items />
+    </material>
+    <material>
+      <name>3 кольца под ключ до 100 км Казань</name>
+      <est_items />
+    </material>
+    <material>
+      <name>3 кольца под ключ 100-300 км Казань</name>
+      <est_items />
+    </material>
+    <material>
+      <name>3 кольца под ключ свыше 300 км Казань</name>
+      <est_items />
+    </material>
+  </sewer>
+  <wiring name="Типы электрики" materials_type="material" depends_on_rooftype="false">
+    <material>
+      <name>Нет</name>
+      <est_items />
+    </material>
+    <material>
+      <name>До 100 м2 - 20 точек</name>
+      <est_items />
+    </material>
+    <material>
+      <name>От 100 - безлимит м2 - 30 точек</name>
+      <est_items />
+    </material>
+  </wiring>
+  <heating name="Типы отопления" materials_type="material" depends_on_rooftype="false">
+    <material>
+      <name>Нет</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Газовое + санта до 120 м2</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Газовое + санта 120-200 м2</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Электрическое+ санта до 120 м2</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Электрическое +  санта 120-200 м2</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Конвекторы без санты до 120</name>
+      <est_items />
+    </material>
+    <material>
+      <name>Конвекторы без санты свыше 120</name>
+      <est_items />
+    </material>
+  </heating>
+  <hardware name="Метизы" materials_type="material" depends_on_rooftype="false">
+    <material>
+      <name>Метиз</name>
+      <est_items />
+    </material>
+  </hardware>
+  <installation_services name="Производственно-монтажные услуги" materials_type="material" depends_on_rooftype="false">
+    <material>
+      <name>Производство, монтаж</name>
+      <est_items />
+    </material>
+  </installation_services>
+  <shipping_services name="Услуги доставки" materials_type="material" depends_on_rooftype="false">
+    <material>
+      <name>Доставка</name>
+      <est_items />
+    </material>
+  </shipping_services>
+  <external_constructions name="Дополнительные конструкции" materials_type="material" depends_on_rooftype="false">
+    <material>
+      <name>Крыльцо/Терасса/Балкон летний</name>
+      <est_items />
+    </material>
+  </external_constructions>
+  <resources name="Дополнительно" materials_type="extensions" depends_on_rooftype="false">
+    <grillage>
+      <name>Ростверк</name>
+      <est_items>
+        <est_item>
+          <name>Ростверк 150*200</name>
+          <description />
+          <price>0</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Скобы</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Праймер</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Рубероид</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+        <est_item>
+          <name>Глухарь 140</name>
+          <description />
+          <price>4100</price>
+          <measure>{нет}</measure>
+          <markup>35,0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">0</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </grillage>
+    <window_film>
+      <name>Плёнка на окна</name>
+      <est_items>
+        <est_item>
+          <name>Плёнка на окна</name>
+          <description>{нет описания}</description>
+          <price>1</price>
+          <measure>шт.</measure>
+          <markup>0</markup>
+          <quantity_formulas>
+            <quantity rooftype="None">1</quantity>
+          </quantity_formulas>
+        </est_item>
+      </est_items>
+    </window_film>
+  </resources>
+</materials>

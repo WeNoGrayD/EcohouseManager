@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Проект-->
+<root contain_materials="false">
+	<meta name="Мета" 
+		  contain_materials="false">
+		<!--Имя клиента-->
+		<customer name="Имя клиента"/>
+		<!--Телефон-->
+		<phone name="Телефон"/>
+		<!--Населенный пункт-->
+		<location name="Населенный пункт"/>
+		<!--Расстояние в километрах-->
+		<distance name="Расстояние в километрах"/>
+		<!--Площадь в метрах квадратных-->
+		<area name="Площадь"/>
+	</meta>
+	<!--Параметры дома для расчёта-->
+	<house_params>
+		<house_length>0</house_length>
+		<house_width>0</house_width>
+		<grillage_molding>0</grillage_molding>
+		<floor1_height>0</floor1_height>
+		<floor1_bearing_walls_molding>0</floor1_bearing_walls_molding>
+		<floor1_curtain_walls_molding>0</floor1_curtain_walls_molding>
+		<floor1_external_walls_molding>0</floor1_external_walls_molding>
+		<floor2_height>0</floor2_height>
+		<floor2_bearing_walls_molding>0</floor2_bearing_walls_molding>
+		<floor2_curtain_walls_molding>0</floor2_curtain_walls_molding>
+		<floor2_external_walls_molding>0</floor2_external_walls_molding>
+		<ridge_length>0</ridge_length>
+		<slope_length>0</slope_length>
+		<slope_width>0</slope_width>
+	</house_params>
+	<!--Модель данных-->
+	<house name="Проект" 
+		   contain_materials="false">
+		<!--Фундамент-->
+		<base name="Фундамент" 
+			  contain_materials="true" 
+			  container_type="single" 
+			  materials_type="material"
+			  depends_on_rooftype="false"
+			  is_loaded="false" />
+		<!--Цоколь-->
+		<basement name="Цоколь" 
+				  contain_materials="false">
+			<!--Цокольное перекрытие-->
+			<ceiling name="Цокольное перекрытие"
+					 contain_materials="true" 
+					 container_type="single" 
+					 materials_type="material" 
+					 depends_on_rooftype="true"
+					 is_loaded="false" />
+			<!--Цокольная отделка-->
+			<siding name="Цокольная отделка" 
+					contain_materials="true" 
+					container_type="single" 
+					materials_type="material"
+					depends_on_rooftype="true"
+					is_loaded="false" />
+		</basement>
+		<!--Этажи-->
+		<floors name="Этажи" 
+				contain_materials="false">
+			<!--Первый этаж-->
+			<floor1 name="Первый этаж" 
+				    contain_materials="false">
+				<!--Стены-->
+				<walls name="Стены" contain_materials="false">
+					<!--Несущие стены-->
+					<bearing_walls name="Несущие стены" 
+								   contain_materials="true" 
+								   container_type="single" 
+								   materials_type="material"
+								   depends_on_rooftype="true"
+								   is_loaded="false" />
+					<!--Ненесущие стены-->
+					<curtain_walls name="Не несущие стены" 
+								   contain_materials="true"
+								   container_type="single"
+								   materials_type="material" 
+								   depends_on_rooftype="true"
+								   is_loaded="false" />
+					<!--Внешние стены-->
+					<external_walls name="Внешние стены" 
+									contain_materials="true" 
+									container_type="single" 
+									materials_type="material"
+									depends_on_rooftype="true"
+									is_loaded="false" />
+				</walls>
+				<!--Гипсокартон-->
+				<plasterboard name="Гипсокартон" 
+							  contain_materials="false">
+					<!--Гипсокартон стены-->
+					<plasterboard_walls name="Гипсокартон стены"
+										contain_materials="true" 
+										container_type="single" 
+										materials_type="enum_material"
+									    depends_on_rooftype="true"
+										is_loaded="false" />
+					<!--Гипсокартон потолок-->
+					<plasterboard_ceiling name="Гипсокартон потолок"
+										  contain_materials="true"
+										  container_type="single" 
+										  materials_type="enum_material"  
+										  depends_on_rooftype="true" 
+										  is_loaded="false" />
+				</plasterboard>
+				<!--Перекрытие первого этажа-->
+				<ceiling name="Перекрытие первого этажа" 
+						 contain_materials="true" 
+						 container_type="single" 
+						 materials_type="material"
+						 depends_on_rooftype="true"
+						 is_loaded="false" />
+				<!--Окна-->
+				<windows name="Окна" 
+						 container_type="many"
+						 contain_materials="true"
+						 materials_type="window"
+						 depends_on_rooftype="false"
+						 is_loaded="false" />
+			</floor1>
+			<!--Второй этаж-->
+			<floor2 name="Второй этаж" contain_materials="false">
+				<!--Стены-->
+				<walls name="Стены" contain_materials="false">
+					<!--Несущие стены-->
+					<bearing_walls name="Несущие стены" 
+								   contain_materials="true" 
+								   container_type="single" 
+								   materials_type="material"
+								   depends_on_rooftype="true"
+								   is_loaded="false" />
+					<!--Ненесущие стены-->
+					<curtain_walls name="Не несущие стены" 
+								   contain_materials="true"
+								   container_type="single"
+								   materials_type="material" 
+								   depends_on_rooftype="true"
+								   is_loaded="false" />
+					<!--Внешние стены-->
+					<external_walls name="Внешние стены" 
+									contain_materials="true" 
+									container_type="single" 
+									materials_type="material"
+								    depends_on_rooftype="true"
+									is_loaded="false" />
+				</walls>
+				<!--Гипсокартон-->
+				<plasterboard name="Гипсокартон" 
+							  contain_materials="false">
+					<!--Гипсокартон стены-->
+					<plasterboard_walls name="Гипсокартон стены"
+										contain_materials="true" 
+										container_type="single" 
+										materials_type="enum_material" 
+										depends_on_rooftype="true"
+										is_loaded="false" />
+					<!--Гипсокартон потолок-->
+					<plasterboard_ceiling name="Гипсокартон потолок"
+										  contain_materials="true"
+										  container_type="single" 
+										  materials_type="enum_material"  
+										  depends_on_rooftype="true"
+										  is_loaded="false" />
+				</plasterboard>
+				<!--Перекрытие второго этажа-->
+				<ceiling name="Перекрытие второго этажа" 
+						 contain_materials="true" 
+						 container_type="single" 
+						 materials_type="material"
+						 depends_on_rooftype="true"
+						 is_loaded="false" />
+				<!--Окна-->
+				<windows name="Окна" 
+						 container_type="many"
+						 contain_materials="true"
+						 materials_type="window"
+						 depends_on_rooftype="false"
+						 is_loaded="false" />
+			</floor2>
+		</floors>
+		<!--Кровля-->
+		<roof name="Кровля" 
+			  contain_materials="false"
+			  rooftype="None" 
+			  roofing_film="false" >
+			<!--Покрытие кровли-->
+			<roofing name="Покрытие кровли" 
+					 contain_materials="true" 
+					 container_type="single" 
+					 materials_type="material"
+					 depends_on_rooftype="true"
+					 is_loaded="false" />
+			<!--Карниз-->
+			<cornice name="Карниз" 
+					 contain_materials="true" 
+					 container_type="single" 
+					 materials_type="enum_material"
+					 depends_on_rooftype="false"
+					 is_loaded="false" />
+			<!--Дополнения к кровле-->
+			<!--Водосточная система-->
+			<gutter name="Водосточная система"
+					contain_materials="true"
+					container_type="single" 
+					materials_type="material" 
+					depends_on_rooftype="true"
+					is_loaded="false" />
+			<!--Снегодержатели-->
+			<snowholders name="Снегодержатели"
+						 contain_materials="true" 
+						 container_type="single" 
+						 materials_type="enum_material" 
+						 depends_on_rooftype="false"
+						 is_loaded="true">
+				<enum_material>
+					<name>Снегодержатели забористые</name>
+					<quantity>0</quantity>
+					<est_items/>
+					<summary>0</summary>
+				</enum_material>
+			</snowholders>
+		</roof>
+		<!--Наружная отделка-->
+		<external_siding name="Наружная отделка" 
+						 contain_materials="true" 
+						 container_type="single" 
+						 materials_type="material"
+						 depends_on_rooftype="true"
+						 is_loaded="false"  />
+		<!--Вентиляция-->
+		<ventilation name="Вентиляция" 
+					 contain_materials="true" 
+					 container_type="single" 
+					 materials_type="enum_material"
+					 depends_on_rooftype="false"
+					 is_loaded="true">
+			<enum_material>
+				<name>Вентилировали-вентилировали, да не вывентелировали</name>
+				<quantity>0</quantity>
+				<est_items/>
+				<summary>0</summary>
+			</enum_material>
+		</ventilation>
+		<!--Дверь входная-->
+		<enter_door name="Дверь входная" 
+			  contain_materials="true" 
+			  container_type="single"
+			  materials_type="material"
+			  depends_on_rooftype="false"
+			  is_loaded="false" />
+		<!--Квадратура балкона в метрах квадратных-->
+		<balcony name="Квадратура балкона" 
+				 contain_materials="true" 
+				 container_type="single" 
+				 materials_type="enum_material" 
+				 depends_on_rooftype="false"
+				 is_loaded="true">
+			<enum_material>
+				<name>Квадратура балкона</name>
+				<quantity>0</quantity>
+				<est_items/>
+				<summary>0</summary>
+			</enum_material>
+		</balcony>
+		<!--Квадратура терассы в метрах квадратных-->
+		<terrace name="Квадратура терассы"
+				 contain_materials="true" 
+				 container_type="single" 
+				 materials_type="enum_material"  
+				 depends_on_rooftype="false"
+				 is_loaded="true">
+			<enum_material>
+				<name>Квадратура террасы</name>
+				<quantity>0</quantity>
+				<est_items/>
+				<summary>0</summary>
+			</enum_material>
+		</terrace>
+		<!--Квадратура крыльца в метрах квадратных-->
+		<porch name="Квадратура крыльца" 
+			   contain_materials="true" 
+			   container_type="single" 
+			   materials_type="enum_material"
+			   depends_on_rooftype="false"
+			   is_loaded="true">
+			<enum_material>
+				<name>Квадратура крыльца</name>
+				<quantity>0</quantity>
+				<est_items/>
+				<summary>0</summary>
+			</enum_material>
+		</porch>
+		<!--Коммуникации-->
+		<infrastructure name="Коммуникации" 
+						contain_materials="false">
+			<!--Канализация-->
+			<sewer name="Канализация" 
+				   contain_materials="true" 
+				   container_type="single" 
+				   materials_type="material" 
+				   depends_on_rooftype="false"
+				   is_loaded="false" />
+			<!--Электрика-->
+			<wiring name="Электрика" 
+					contain_materials="true"
+					container_type="single" 
+					materials_type="material"
+					depends_on_rooftype="false"
+					is_loaded="false" />
+			<!--Отопление-->
+			<heating name="Отопление" 
+					 contain_materials="true" 
+					 container_type="single"
+					 materials_type="material"
+					 depends_on_rooftype="false"
+					 is_loaded="false" />
+		</infrastructure>
+	</house>
+</root>

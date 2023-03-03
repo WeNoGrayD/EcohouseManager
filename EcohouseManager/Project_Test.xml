@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Проект-->
+<root contain_materials="false">
+	<meta name="Мета" contain_materials="false">
+		<!--Имя клиента-->
+		<customer name="Имя клиента"/>
+		<!--Телефон-->
+		<phone name="Телефон"/>
+		<!--Населенный пункт-->
+		<location name="Населенный пункт"/>
+		<!--Расстояние в километрах-->
+		<distance name="Расстояние в километрах"/>
+		<!--Площадь в метрах квадратных-->
+		<area name="Площадь"/>
+	</meta>
+	<!--Параметры дома для расчёта-->
+	<house_params>
+		<house_length>101</house_length>
+		<house_width>890</house_width>
+		<grillage_molding>435</grillage_molding>
+		<floor1_height>34121</floor1_height>
+		<floor1_bearing_walls_molding>34</floor1_bearing_walls_molding>
+		<floor1_curtain_walls_molding>677</floor1_curtain_walls_molding>
+		<floor1_external_walls_molding>3245</floor1_external_walls_molding>
+		<floor2_height>118</floor2_height>
+		<floor2_bearing_walls_molding>3412</floor2_bearing_walls_molding>
+		<floor2_curtain_walls_molding>9049</floor2_curtain_walls_molding>
+		<floor2_external_walls_molding>4389</floor2_external_walls_molding>
+		<ridge_length>29058</ridge_length>
+		<slope_length>85289</slope_length>
+		<slope_width>243</slope_width>
+	</house_params>
+	<!--Модель данных-->
+	<house name="Проект" contain_materials="false">
+		<!--Фундамент-->
+		<base name="Фундамент" is_loaded="true" contain_materials="true" container_type="single" materials_type="material">
+			<material>
+				<name>Ростверк 150*200 + винт.сваи 2500мм</name>
+				<est_items>
+					<est_item>
+						<name>la?</name>
+						<description>LALALA</description>
+						<price>12</price>
+						<quantity>18</quantity>
+						<measure>м кв.</measure>
+						<markup>35,0</markup>
+						<summary>1234</summary>
+						<quantity_formulas>
+							<quantity rooftype="None">18</quantity>
+						</quantity_formulas>
+					</est_item>
+					<est_item>
+						<name>lala</name>
+						<description>LA!LA!LA!</description>
+						<price>12</price>
+						<quantity>43</quantity>
+						<measure>м кв.</measure>
+						<markup>35,0</markup>
+						<summary>1234</summary>
+						<quantity_formulas>
+							<quantity rooftype="None">43</quantity>
+						</quantity_formulas>
+					</est_item>
+					<est_item>
+						<name>lalala</name>
+						<description>LA!!!LA!!!LA!!!</description>
+						<price>12</price>
+						<quantity>109</quantity>
+						<measure>м кв.</measure>
+						<markup>35,0</markup>
+						<summary>1234</summary>
+						<quantity_formulas>
+							<quantity rooftype="None">109</quantity>
+						</quantity_formulas>
+					</est_item>
+				</est_items>
+				<summary>2131230</summary>
+			</material>
+		</base>
+		<!--Цоколь-->
+		<basement name="Цоколь" contain_materials="false">
+			<!--Цокольное перекрытие-->
+			<ceiling name="Цокольное перекрытие" is_loaded="true" contain_materials="true" container_type="single" materials_type="material">
+				<material>
+					<name>Каркас голый 50*150/30*150 - сверху сплошь</name>
+					<est_items>
+						<est_item>
+							<name>Каркас 50*150</name>
+							<description/>
+							<price>4100</price>
+							<quantity>0</quantity>
+							<measure>{нет}</measure>
+							<markup>35,0</markup>
+							<summary>1234</summary>
+							<quantity_formulas>
+								<quantity rooftype="TwoFloors">высота_этажа * 24</quantity>
+								<quantity rooftype="FourSlopes">этаж_пм_несущ_стен / 2123</quantity>
+								<quantity rooftype="RoofLorry">этаж_пм_ненесущ_стен ^ 0,1</quantity>
+								<quantity rooftype="RidgeRoof">12+этаж_пм_внеш_стен</quantity>
+							</quantity_formulas>
+						</est_item>
+						<est_item>
+							<name>Сверху 30*150</name>
+							<description/>
+							<price>4100</price>
+							<quantity>0</quantity>
+							<measure>{нет}</measure>
+							<markup>35,0</markup>
+							<summary>1234</summary>
+							<quantity_formulas>
+								<quantity rooftype="TwoFloors">(высота_этажа - этаж_пм_внеш_стен) * (этаж_пм_ненесущ_стен / этаж_пм_несущ_стен)</quantity>
+								<quantity rooftype="FourSlopes">123+1</quantity>
+								<quantity rooftype="RoofLorry">57345</quantity>
+								<quantity rooftype="RidgeRoof">1456</quantity>
+							</quantity_formulas>
+						</est_item>
+					</est_items>
+				</material>
+			</ceiling>
+			<!--Цокольная отделка-->
+			<siding name="Цокольная отделка" is_loaded="true" contain_materials="true" container_type="single" materials_type="material">
+				<material>
+					<name>Нет</name>
+					<est_items/>
+				</material>
+			</siding>
+		</basement>
+		<!--Этажи-->
+		<floors name="Этажи" contain_materials="false">
+			<!--Первый этаж-->
+			<floor1 name="Первый этаж" contain_materials="false">
+				<!--Стены-->
+				<walls name="Стены" contain_materials="false">
+					<!--Несущие стены-->
+					<bearing_walls name="Несущие стены" is_loaded="true" contain_materials="true" container_type="single" materials_type="material">
+						<material>
+							<name>asdasda</name>
+							<est_items/>
+						</material>
+					</bearing_walls>
+					<!--Не несущие стены-->
+					<curtain_walls name="Не несущие стены" is_loaded="true" contain_materials="true" container_type="single" materials_type="material">
+						<material>
+							<name>ghjdhdf</name>
+							<est_items/>
+						</material>
+					</curtain_walls>
+					<!--Внешние стены-->
+					<external_walls name="Внешние стены" is_loaded="true" contain_materials="true" container_type="single" materials_type="material">
+						<material>
+							<name>afhgffg</name>/material>
+					<est_items/>
+						</material>
+					</external_walls>
+				</walls>
+				<!--Гипсокартон-->
+				<plasterboard name="Гипсокартон" contain_materials="false">
+					<!--Гипсокартон стены-->
+					<plasterboard_walls name="Гипсокартон стены" is_loaded="true" contain_materials="true" layers="1" container_type="single" materials_type="enum_material">
+						<enum_material>
+							<name>первый негритёнок</name>
+							<quantity>10</quantity>
+							<est_items>
+								<est_item>
+									<name>левая ножка</name>
+									<description>{нет описания}</description>
+									<price>1</price>
+									<quantity>1</quantity>
+									<measure>{нет}</measure>
+									<markup>35,0</markup>
+									<summary>10,5</summary>
+									<quantity_formulas>
+										<quantity rooftype="TwoFloors">высота_этажа * 24</quantity>
+										<quantity rooftype="FourSlopes">этаж_пм_несущ_стен / 2123</quantity>
+										<quantity rooftype="RoofLorry">этаж_пм_ненесущ_стен ^ 0,1</quantity>
+										<quantity rooftype="RidgeRoof">12+этаж_пм_внеш_стен</quantity>
+									</quantity_formulas>
+								</est_item>
+								<est_item>
+									<name>правая ножка</name>
+									<description>{нет описания}</description>
+									<price>1</price>
+									<quantity>0</quantity>
+									<measure>м куб.</measure>
+									<markup>35,0</markup>
+									<summary>10,5</summary>
+									<quantity_formulas>
+										<quantity rooftype="TwoFloors">(высота_этажа - этаж_пм_внеш_стен) * (этаж_пм_ненесущ_стен / этаж_пм_несущ_стен)</quantity>
+										<quantity rooftype="FourSlopes">123+1</quantity>
+										<quantity rooftype="RoofLorry">57345</quantity>
+										<quantity rooftype="RidgeRoof">1456</quantity>
+									</quantity_formulas>
+								</est_item>
+								<est_item>
+									<name>левая ручка</name>
+									<description>{нет описания}</description>
+									<price>1</price>
+									<quantity>1</quantity>
+									<measure>шт.</measure>
+									<markup>35,0</markup>
+									<summary>10,5</summary>
+									<quantity_formulas>
+										<quantity rooftype="TwoFloors">5</quantity>
+										<quantity rooftype="FourSlopes">6</quantity>
+										<quantity rooftype="RoofLorry">3</quantity>
+										<quantity rooftype="RidgeRoof">5</quantity>
+									</quantity_formulas>
+								</est_item>
+								<est_item>
+									<name>правая ручка</name>
+									<description>{нет описания}</description>
+									<price>1</price>
+									<quantity>1</quantity>
+									<measure>{нет}</measure>
+									<markup>35,0</markup>
+									<summary>10,5</summary>
+									<quantity_formulas>
+										<quantity rooftype="TwoFloors">2</quantity>
+										<quantity rooftype="FourSlopes">5</quantity>
+										<quantity rooftype="RoofLorry">1</quantity>
+										<quantity rooftype="RidgeRoof">5</quantity>
+									</quantity_formulas>
+								</est_item>
+							</est_items>
+						</enum_material>
+					</plasterboard_walls>
+					<!--Гипсокартон потолок-->
+					<plasterboard_ceiling name="Гипсокартон потолок" is_loaded="false" contain_materials="true" layers="1" container_type="single" materials_type="enum_material">
+						<enum_material/>
+					</plasterboard_ceiling>
+				</plasterboard>
+				<!--Перекрытие первого этажа-->
+				<ceiling name="Перекрытие первого этажа" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+					<material/>
+				</ceiling>
+				<!--Окна-->
+				<windows name="Окна" is_loaded="true" container_type="many" contain_materials="true" materials_type="window">
+					<window has_film="false">
+						<name>1875х1550 (3)</name>
+						<quantity>12</quantity>
+						<est_items>
+							<est_item>
+								<name>1875х1550 (3)</name>
+								<description>{нет описания}</description>
+								<price>0</price>
+								<quantity>1</quantity>
+								<measure>{нет}</measure>
+								<markup>35,0</markup>
+								<summary>18</summary>
+								<quantity_formulas>
+									<quantity rooftype="None">0</quantity>
+								</quantity_formulas>
+							</est_item>
+						</est_items>
+					</window>
+					<window has_film="true">
+						<name>1875х1400 (3)</name>
+						<quantity>3</quantity>
+						<est_items>
+							<est_item>
+								<name>1875х1400 (3)</name>
+								<description>{нет описания}</description>
+								<price>0</price>
+								<quantity>1</quantity>
+								<measure>{нет}</measure>
+								<markup>35,0</markup>
+								<summary>18</summary>
+								<quantity_formulas>
+									<quantity rooftype="None">0</quantity>
+								</quantity_formulas>
+							</est_item>
+						</est_items>
+					</window>
+					<window has_film="false">
+						<name>1875х1550 (2)</name>
+						<quantity>100</quantity>
+						<est_items>
+							<est_item>
+								<name>1875х1550 (2)</name>
+								<description>{нет описания}</description>
+								<price>0</price>
+								<quantity>1</quantity>
+								<measure>{нет}</measure>
+								<markup>35,0</markup>
+								<summary>18</summary>
+								<quantity_formulas>
+									<quantity rooftype="None">0</quantity>
+								</quantity_formulas>
+							</est_item>
+						</est_items>
+					</window>
+					<window has_film="true">
+						<name>1875х1400 (2)</name>
+						<quantity>300</quantity>
+						<est_items>
+							<est_item>
+								<name>1875х1400 (2)</name>
+								<description>{нет описания}</description>
+								<price>0</price>
+								<quantity>1</quantity>
+								<measure>{нет}</measure>
+								<markup>35,0</markup>
+								<summary>18</summary>
+								<quantity_formulas>
+									<quantity rooftype="None">0</quantity>
+								</quantity_formulas>
+							</est_item>
+						</est_items>
+					</window>
+					<window has_film="true">
+						<name>900х2100 (1 двер проф)</name>
+						<quantity>6</quantity>
+						<est_items>
+							<est_item>
+								<name>900х2100 (1 двер проф)</name>
+								<description>{нет описания}</description>
+								<price>0</price>
+								<quantity>1</quantity>
+								<measure>{нет}</measure>
+								<markup>35,0</markup>
+								<summary>18</summary>
+								<quantity_formulas>
+									<quantity rooftype="None">0</quantity>
+								</quantity_formulas>
+							</est_item>
+						</est_items>
+					</window>
+				</windows>
+			</floor1>
+			<!--Второй этаж-->
+			<floor2 name="Второй этаж" contain_materials="false">
+				<!--Стены-->
+				<walls name="Стены" contain_materials="false">
+					<!--Несущие стены-->
+					<bearing_walls name="Несущие стены" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+						<material/>
+					</bearing_walls>
+					<!--Не несущие стены-->
+					<curtain_walls name="Не несущие стены" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+						<material/>
+					</curtain_walls>
+					<!--Внешние стены-->
+					<external_walls name="Внешние стены" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+						<material/>
+					</external_walls>
+				</walls>
+				<!--Гипсокартон-->
+				<plasterboard name="Гипсокартон" contain_materials="false">
+					<!--Гипсокартон стены-->
+					<plasterboard_walls name="Гипсокартон стены" is_loaded="true" contain_materials="true" layers="1" container_type="single" materials_type="enum_material">
+						<enum_material>
+							<name>второй негритёнок</name>
+							<quantity>9</quantity>
+							<est_items>
+								<est_item>
+									<name>левая ножка</name>
+									<description>{нет описания}</description>
+									<price>1</price>
+									<quantity>1</quantity>
+									<measure>{нет}</measure>
+									<markup>35,0</markup>
+									<summary>10,5</summary>
+									<quantity_formulas>
+										<quantity rooftype="TwoFloors">4</quantity>
+										<quantity rooftype="FourSlopes">5</quantity>
+										<quantity rooftype="RoofLorry">6</quantity>
+										<quantity rooftype="RidgeRoof">7</quantity>
+									</quantity_formulas>
+								</est_item>
+								<est_item>
+									<name>правая ножка</name>
+									<description>{нет описания}</description>
+									<price>1</price>
+									<quantity>1</quantity>
+									<measure>м куб.</measure>
+									<markup>35,0</markup>
+									<summary>10,5</summary>
+									<quantity_formulas>
+										<quantity rooftype="TwoFloors">4</quantity>
+										<quantity rooftype="FourSlopes">5</quantity>
+										<quantity rooftype="RoofLorry">6</quantity>
+										<quantity rooftype="RidgeRoof">7</quantity>
+									</quantity_formulas>
+								</est_item>
+								<est_item>
+									<name>левая ручка</name>
+									<description>{нет описания}</description>
+									<price>1</price>
+									<quantity>1</quantity>
+									<measure>шт.</measure>
+									<markup>35,0</markup>
+									<summary>10,5</summary>
+									<quantity_formulas>
+										<quantity rooftype="TwoFloors">5</quantity>
+										<quantity rooftype="FourSlopes">6</quantity>
+										<quantity rooftype="RoofLorry">3</quantity>
+										<quantity rooftype="RidgeRoof">5</quantity>
+									</quantity_formulas>
+								</est_item>
+								<est_item>
+									<name>правая ручка</name>
+									<description>{нет описания}</description>
+									<price>1</price>
+									<quantity>1</quantity>
+									<measure>{нет}</measure>
+									<markup>35,0</markup>
+									<summary>10,5</summary>
+									<quantity_formulas>
+										<quantity rooftype="TwoFloors">2</quantity>
+										<quantity rooftype="FourSlopes">5</quantity>
+										<quantity rooftype="RoofLorry">1</quantity>
+										<quantity rooftype="RidgeRoof">5</quantity>
+									</quantity_formulas>
+								</est_item>
+							</est_items>
+						</enum_material>
+					</plasterboard_walls>
+					<!--Гипсокартон потолок-->
+					<plasterboard_ceiling name="Гипсокартон потолок" is_loaded="false" contain_materials="true" layers="1" container_type="single" materials_type="enum_material">
+						<enum_material/>
+					</plasterboard_ceiling>
+				</plasterboard>
+				<!--Перекрытие второго этажа-->
+				<ceiling name="Перекрытие второго этажа" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+					<material/>
+				</ceiling>
+				<!--Окна-->
+				<windows name="Окна" is_loaded="true" contain_materials="true" container_type="many" materials_type="window">
+					<window has_film="true">
+						<name>625х1550 (1)</name>
+						<quantity>11000</quantity>
+						<est_items>
+							<est_item>
+								<name>625х1550 (1)</name>
+								<description>{нет описания}</description>
+								<price>0</price>
+								<quantity>1</quantity>
+								<measure>{нет}</measure>
+								<markup>35,0</markup>
+								<summary>19</summary>
+								<quantity_formulas>
+									<quantity rooftype="None">0</quantity>
+								</quantity_formulas>
+							</est_item>
+						</est_items>
+					</window>
+					<window has_film="false">
+						<name>625х1400 (1)</name>
+						<quantity>65535</quantity>
+						<est_items>
+							<est_item>
+								<name>625х1400 (1)</name>
+								<description>{нет описания}</description>
+								<price>0</price>
+								<quantity>1</quantity>
+								<measure>{нет}</measure>
+								<markup>35,0</markup>
+								<summary>19</summary>
+								<quantity_formulas>
+									<quantity rooftype="None">0</quantity>
+								</quantity_formulas>
+							</est_item>
+						</est_items>
+					</window>
+					<window has_film="true">
+						<name>625х625 (1)</name>
+						<quantity>18390</quantity>
+						<est_items>
+							<est_item>
+								<name>625х625 (1)</name>
+								<description>{нет описания}</description>
+								<price>0</price>
+								<quantity>1</quantity>
+								<measure>{нет}</measure>
+								<markup>35,0</markup>
+								<summary>19</summary>
+								<quantity_formulas>
+									<quantity rooftype="None">0</quantity>
+								</quantity_formulas>
+							</est_item>
+						</est_items>
+					</window>
+				</windows>
+			</floor2>
+		</floors>
+		<!--Кровля-->
+		<roof name="Кровля" rooftype="TwoFloors" roofing_film="false" contain_materials="false">
+			<!--Покрытие кровли-->
+			<roofing name="Покрытие кровли" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+				<material/>
+			</roofing>
+			<!--Карниз-->
+			<cornice name="Карниз" is_loaded="true" contain_materials="true" container_type="single" materials_type="enum_material">
+				<enum_material>
+					<name>Карниз спартанский</name>
+					<quantity>300</quantity>
+					<est_items/>
+				</enum_material>
+			</cornice>
+			<!--Дополнения к кровле-->
+			<!--Водосточная система-->
+			<gutter name="Водосточная система" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+				<material/>
+			</gutter>
+			<!--Снегодержатели-->
+			<snowholders name="Снегодержатели" is_loaded="false" contain_materials="true" container_type="single" materials_type="enum_material">
+				<enum_material/>
+			</snowholders>
+		</roof>
+		<!--Наружная отделка-->
+		<external_siding name="Наружная отделка" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+			<material/>
+		</external_siding>
+		<!--Вентиляция-->
+		<ventilation name="Вентиляция" is_loaded="false" contain_materials="true" container_type="single" materials_type="enum_material">
+			<enum_material/>
+		</ventilation>
+		<!--Дверь входная-->
+		<enter_door name="Дверь входная" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+			<material/>
+		</enter_door>
+		<!--Квадратура балкона в метрах квадратных-->
+		<balcony name="Квадратура балкона" is_loaded="true" contain_materials="true" container_type="single" materials_type="enum_material">
+			<enum_material>
+				<name>Балкон</name>
+				<quantity>198</quantity>
+				<est_items/>
+			</enum_material>
+		</balcony>
+		<!--Квадратура терассы в метрах квадратных-->
+		<terrace name="Квадратура терассы" is_loaded="true" contain_materials="true" container_type="single" materials_type="enum_material">
+			<enum_material>
+				<name>Терраса</name>
+				<quantity>948</quantity>
+				<est_items/>
+			</enum_material>
+		</terrace>
+		<!--Квадратура крыльца в метрах квадратных-->
+		<porch name="Квадратура крыльца" is_loaded="true" contain_materials="true" container_type="single" materials_type="enum_material">
+			<enum_material>
+				<name>Крыльцо</name>
+				<quantity>18</quantity>
+				<est_items/>
+			</enum_material>
+		</porch>
+		<!--Коммуникации-->
+		<infrastructure name="Коммуникации" contain_materials="false">
+			<!--Канализация-->
+			<sewer name="Канализация" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+				<material/>
+			</sewer>
+			<!--Электрика-->
+			<wiring name="Электрика" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+				<material/>
+			</wiring>
+			<!--Отопление-->
+			<heating name="Отопление" is_loaded="false" contain_materials="true" container_type="single" materials_type="material">
+				<material/>
+			</heating>
+		</infrastructure>
+	</house>
+</root>

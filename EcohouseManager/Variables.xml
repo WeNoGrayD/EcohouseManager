@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<constants>
+  <const name="высота_этажа" description="Особое значение">0</const>
+  <const name="этаж_пм_несущ_стен" description="Особое значение">0</const>
+  <const name="этаж_пм_ненесущ_стен" description="Особое значение">0</const>
+  <const name="этаж_пм_внеш_стен" description="Особое значение">0</const>
+  <const name="trialkm_P" description="Стоимость километра доставки техники для пробного бурения">50</const>
+  <const name="trialdr_P" description="Стоимость пробной вкрутки">4000</const>
+  <const name="pileship_P" description="Стоимость километра доставки свай">20</const>
+  <const name="techship_P" description="Стоимость достаки спецтехники">40</const>
+  <const name="piledist_C" description="Расстояние между сваями">1,7</const>
+  <const name="{без имени 1}" description="{нет описания}">0</const>
+  <const name="{без имени 2}" description="{нет описания}">0</const>
+  <const name="{без имени 3}" description="{нет описания}">0</const>
+</constants>

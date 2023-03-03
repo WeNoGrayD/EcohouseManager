@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HouseRoot>
+  <length>100</length>
+  <width>200</width>
+  <pogonaj>233,66</pogonaj>
+  <floor>
+	<height>4,2</height>
+	<pogonaj_nesuschih>66,89</pogonaj_nesuschih>
+	<pogonaj_nenesuschih>109,34</pogonaj_nenesuschih>
+  </floor>
+  <floor>
+	<height>3,6</height>
+	<pogonaj_nesuschih>10,32</pogonaj_nesuschih>
+	<pogonaj_nenesuschih>83,56</pogonaj_nenesuschih>
+  </floor>
+</HouseRoot>

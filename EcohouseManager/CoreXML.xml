@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Проект-->
+<root>
+	<house name="Проект">
+		<!--Имя клиента-->
+		<customer name="Имя клиента"/>
+		<!--Телефон-->
+		<phone name="Телефон"/>
+		<!--Населенный пункт-->
+		<location name="Населенный пункт"/>
+		<!--Расстояние в километрах-->
+		<distance name="Расстояние в километрах"/>
+		<!--Площадь в метрах квадратных-->
+		<area name="Площадь"/>
+		<!--Фундамент-->
+		<base name="Фундамент"/>
+		<!--Цоколь-->
+		<basement name="Цоколь">
+			<!--Цокольное перекрытие-->
+			<celling name="Цокольное перекрытие"/>
+			<!--Цокольная отделка-->
+			<siding name="Цокольная отделка"/>
+		</basement>
+		<!--Этажи-->
+		<floors name="Этажи">
+			<!--Первый этаж-->
+			<ground name="Первый этаж">
+				<!--Стены-->
+				<walls name="Стены">
+					<!--Внешние стены-->
+					<outside name="Внешние стены"/>
+					<!--Несущие стены-->
+					<supporting name="Несущие стены"/>
+					<!--Не несущие стены-->
+					<common name="Не несущие стены"/>
+				</walls>
+				<!--Гипсокартон-->
+				<drywall name="Гипсокартон">
+					<!--Гипсокартон стены-->
+					<walls name="Гипсокартон стены" layers="1"/>
+					<!--Гипсокартон потолок-->
+					<celling name="Гипсокартон потолок" layers="1"/>
+				</drywall>
+				<!--Перекрытие первого этажа-->
+				<celling name="Перекрытие первого этажа"/>
+			</ground>
+			<!--Второй этаж-->
+			<second name="Второй этаж">
+				<!--Стены-->
+				<walls name="Стены">
+					<!--Внешние стены-->
+					<outside name="Внешние стены"/>
+					<!--Несущие стены-->
+					<supporting name="Несущие стены"/>
+					<!--Не несущие стены-->
+					<common name="Не несущие стены"/>
+				</walls>
+				<!--Гипсокартон-->
+				<drywall name="Гипсокартон">
+					<!--Гипсокартон стены-->
+					<walls name="Гипсокартон стены" layers="1"/>
+					<!--Гипсокартон потолок-->
+					<celling name="Гипсокартон потолок" layers="1"/>
+				</drywall>
+				<!--Перекрытие второго этажа-->
+				<celling name="Перекрытие второго этажа"/>
+			</second>
+		</floors>
+		<!--Кровля-->
+		<roof name="Кровля">
+			<!--Тип кровли-->
+			<type name="Тип кровли"/>
+			<!--Пленка на кровлю-->
+			<filming name="Пленка на кровлю">FALSE</filming>
+			<!--Покрытие кровли-->
+			<covering name="Покрытие кровли"/>
+			<!--Карниз-->
+			<cornice name="Карниз" quantity="0"/>
+			<!--Дополнения к кровле-->
+			<!--Водосточная система-->
+			<waterways name="Водосточная система"/>
+			<!--Снегодержатели-->
+			<snowholders name="Снегодержатели"/>
+		</roof>
+		<!--Наружная отделка-->
+		<siding name="Наружная отделка"/>
+		<!--Вентиляция-->
+		<ventilation name="Вентиляция"/>
+		<!--Окна-->
+		<windows name="Окна">
+			<!--Окна первого этажа-->
+			<ground name="Окна первого этажа">
+			
+		</ground>
+			<!--Окна второго этажа-->
+			<second name="Окна второго этажа">
+			
+		</second>
+		</windows>
+		<!--Дверь входная-->
+		<door name="Дверь входная"/>
+		<!--Квадратура балкона в метрах квадратных-->
+		<balcony name="Квадратура балкона"/>
+		<!--Квадратура терассы в метрах квадратных-->
+		<terrace name="Квадратура терассы"/>
+		<!--Квадратура крыльца в метрах квадратных-->
+		<porch name="Квадратура крыльца"/>
+		<!--Коммуникации-->
+		<infrastructure name="Коммуникации">
+			<!--Канализация-->
+			<sewer name="Канализация"/>
+			<!--Электрика-->
+			<electrics name="Электрика"/>
+			<!--Отопление-->
+			<heating name="Отопление"/>
+		</infrastructure>
+	</house>
+	<calculations>
+		<base name="Фундамент под ключ">
+			<source name="Что-то там (1)">
+				<est_items>
+					<item name="la">
+						<description>LALALA</description>
+						<price>12</price>
+						<quantity>123</quantity>
+						<summary>1234</summary>
+					</item>
+					<item name="lala">
+						<description>LA!LA!LA!</description>
+						<price>12</price>
+						<quantity>123</quantity>
+						<summary>1234</summary>
+					</item>
+					<item name="lalala">
+						<description>LA!!!LA!!!LA!!!</description>
+						<price>12</price>
+						<quantity>123</quantity>
+						<summary>1234</summary>
+					</item>
+				</est_items>
+			</source>
+		</base>
+		<rostwerk name="Ростверк">
+			<source>
+				<name>rostwerk</name>
+			</source>
+		</rostwerk>
+		<windows name="Окна (створка)">
+	</windows>
+		<door name="Дверь входная">
+      <source name="Что-то там (2)">
+        <est_items>
+          <item name="lala">
+            <description>LA!LA!LA!</description>
+            <price>12</price>
+            <quantity>123</quantity>
+            <summary>1234</summary>
+          </item>
+          <item name="lalala">
+            <description>LA!!!LA!!!LA!!!</description>
+            <price>12</price>
+            <quantity>123</quantity>
+            <summary>1234</summary>
+          </item>
+        </est_items>
+      </source>
+      <source name="Что-то там (3)">
+        <est_items>
+          <item name="la">
+            <description>LALALA</description>
+            <price>12</price>
+            <quantity>123</quantity>
+            <summary>1234</summary>
+          </item>
+        </est_items>
+      </source>
+		</door>
+		<celling name="Цоколь">
+			<source>
+				<name>basement/celling</name>
+			</source>
+			<source>
+				<name>basement/siding</name>
+			</source>
+		</celling>
+		<ground_walls name="Стены первого этажа СИП">
+			<source>
+				<name>floors/ground/walls/outside</name>
+			</source>
+			<source>
+				<name>floors/ground/walls/supporting</name>
+			</source>
+			<source>
+				<name>floors/ground/walls/common</name>
+			</source>
+			<source>
+				<name>floors/ground/drywall/walls</name>
+			</source>
+			<source>
+				<name>floors/ground/drywall/celling</name>
+			</source>
+		</ground_walls>
+		<ground_celling name="Перекрытие первого этажа СИП">
+			<source>
+				<name>floors/ground/celling</name>
+			</source>
+		</ground_celling>
+		<second_walls name="Стены второго этажа СИП">
+			<source>
+				<name>floors/second/walls/outside</name>
+			</source>
+			<source>
+				<name>floors/second/walls/supporting</name>
+			</source>
+			<source>
+				<name>floors/second/walls/common</name>
+			</source>
+			<source>
+				<name>floors/second/drywall/walls</name>
+			</source>
+			<source>
+				<name>floors/second/drywall/celling</name>
+			</source>
+		</second_walls>
+		<second_celling name="Перекрытие второго этажа СИП">
+			<source>
+				<name>floors/second/celling</name>
+			</source>
+		</second_celling>
+		<metprods name="Метиз">
+			<source>
+				<name>metprods</name>
+			</source>
+		</metprods>
+		<roof name="Кровля">
+			<source>
+				<name>roof/type</name>
+			</source>
+			<source>
+				<name>roof/covering</name>
+			</source>
+		</roof>
+		<сornice name="Карниз">
+			<source>
+				<name>roof/cornice</name>
+			</source>
+		</сornice>
+		<waterways name="Дополнения к кровле">
+			<source>
+				<name>roof/waterways</name>
+			</source>
+			<source>
+				<name>roof/snowholders</name>
+			</source>
+		</waterways>
+		<siding name="Фасад">
+			<source>
+				<name>siding</name>
+			</source>
+		</siding>
+		<buildworks name="Производство, монтаж">
+			<source>
+				<name>buildworks</name>
+			</source>
+		</buildworks>
+		<shipping name="Доставка">
+			<source>
+				<name>shipping</name>
+			</source>
+		</shipping>
+	</calculations>
+	<variables>
+		<width name="Ширина"/>
+		<length name="Высота"/>
+		<distance name="Расстояние до места строительства"/>
+		<area name="Площадь проекта"/>
+	</variables>
+</root>

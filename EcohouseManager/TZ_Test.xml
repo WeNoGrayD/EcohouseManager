@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TZ>
+	<house>
+		<base name="Фундаменты">
+			<houseComp name="Ростверк 150*200 + винт.сваи 2500мм">
+				<est_items>
+					<doors>
+						<name>Двери стальные укреплённые</name>
+						<description>{нет}</description>
+						<price>134000</price>
+						<quantity>ceiling(width+length)/piledist_C+2</quantity>
+						<measure>м</measure>
+					</doors>
+					<piles>
+						<name>Винтовые металлические сваи</name>
+						<description>{нет}</description>
+						<price>100500</price>
+						<quantity>2</quantity>
+						<measure>шт.</measure>
+					</piles>
+					<doors>
+						<name>Двери деревянные</name>
+						<description>{нет}</description>
+						<price>100500</price>
+						<quantity>8</quantity>
+						<measure>л</measure>
+					</doors>
+				</est_items>
+			</houseComp>
+			<houseComp name="Винил софит перфорированный">
+				<est_items>
+					<doors>
+						<name>Калитка трухлявая</name>
+						<description>{нет}</description>
+						<price>0</price>
+						<quantity>1</quantity>
+						<measure>компл.</measure>
+					</doors>
+				</est_items>
+			</houseComp>
+			<houseComp name="МудаМудаМудаМуда">
+				<est_items>
+					<doors>
+						<name>Двери футуристичные</name>
+						<description>{нет}</description>
+						<price>500</price>
+						<quantity>500</quantity>
+						<measure>м куб.</measure>
+					</doors>
+					<piles>
+						<name>Винтики и болтики</name>
+						<description>{нет}</description>
+						<price>2</price>
+						<quantity>1000</quantity>
+						<measure>м кв.</measure>
+					</piles>
+				</est_items>
+			</houseComp>
+		</base>
+	</house>
+	<variables>
+		<width name="Ширина">100</width>
+		<length name="Высота">200</length>
+		<distance name="Расстояние до места строительства">300</distance>
+		<area name="Площадь проекта">400</area>
+	</variables>
+</TZ>
